@@ -20,14 +20,7 @@ export default function HomePage() {
           <h2>Software Engineer</h2>
           <button>Resume</button>
         </div>
-        <div>
-          Social URL- 
-          <span>G</span>
-          <span>L</span>
-          <span>X</span>
-          <span>i</span>
-          <span>W</span>
-        </div>
+       
       </div>
     </section>
   );

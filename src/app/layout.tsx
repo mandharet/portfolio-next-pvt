@@ -3,6 +3,9 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import "./globals.css";
 import StructuredData from "@/components/jsonLD/StructuredData";
+import Left from "@/components/Slide/Left";
+import Right from "@/components/Slide/Right";
+import ScrollProvider from "@/components/ScrollProvider/ScrollProvider";
 export const metadata: Metadata = {
   title: {
     default: "Tejas Mandhare | Remote Backend & React Engineer",
@@ -23,7 +26,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Tejas Mandhare" }],
   creator: "Tejas Mandhare",
-  metadataBase: new URL("https://tejas.mandhare.com"), 
+  metadataBase: new URL("https://tejas.mandhare.com"),
   openGraph: {
     title: "Tejas Mandhare | Remote Backend & React Engineer",
     description:
@@ -52,11 +55,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-white text-gray-900 antialiased">
-        <StructuredData/>
+      <body className="h-screen bg-white text-gray-900 antialiased">
+        <StructuredData />
         <Navbar />
-        <main className="max-w-5xl mx-auto px-4 py-10">
-          {children}
+        <main className="max-w-5xl mx-auto px-4 py-25">
+          <ScrollProvider>
+            {children}
+          </ScrollProvider>
         </main>
         <Footer />
       </body>
