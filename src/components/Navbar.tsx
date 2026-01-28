@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { ModeToggle } from "./Modetoggle";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -23,16 +24,17 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex gap-6 text-sm">
+        <div className="hidden md:flex items-center gap-6 text-sm">
           {navLinks.map((link) => (
             <Link
-              key={link.href}
-              href={link.href}
-              className="hover:text-gray-600"
+            key={link.href}
+            href={link.href}
+            className="hover:text-gray-600"
             >
               {link.label}
             </Link>
           ))}
+          <ModeToggle/>
         </div>
 
         {/* Hamburger */}
@@ -60,7 +62,8 @@ export default function Navbar() {
           ${open ? "translate-x-0 right-0" : "translate-x-full -right-100"}`}
       >
         {/* Close Button */}
-        <div className="flex justify-end p-4">
+        <div className="flex justify-between p-4">
+          <ModeToggle/>
           <button
             onClick={() => setOpen(false)}
             className="text-3xl"

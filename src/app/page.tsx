@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import LampDemo from "@/components/ui/lamp";
 
 export const metadata: Metadata = {
   title: "Builder of Backend Systems",
@@ -8,6 +9,8 @@ export const metadata: Metadata = {
 };
 export default function HomePage() {
   return (
+    <>
+          <LampDemo/>
     <section className="space-y-10">
       <div className="space-y-4">
         <div className="space-y-4">
@@ -23,5 +26,6 @@ export default function HomePage() {
        
       </div>
     </section>
+    </>
   );
 }

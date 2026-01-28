@@ -6,6 +6,7 @@ import StructuredData from "@/components/jsonLD/StructuredData";
 import Left from "@/components/Slide/Left";
 import Right from "@/components/Slide/Right";
 import ScrollProvider from "@/components/ScrollProvider/ScrollProvider";
+import { ThemeProvider } from "@/components/ThemeProvider";
 export const metadata: Metadata = {
   title: {
     default: "Tejas Mandhare | Remote Backend & React Engineer",
@@ -54,16 +55,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="h-screen bg-white text-gray-900 antialiased">
-        <StructuredData />
-        <Navbar />
-        <main className="max-w-5xl mx-auto px-4 py-25">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <StructuredData />
           <ScrollProvider>
-            {children}
+            <Navbar />
+            <main className="max-w-5xl mx-auto px-4 py-25">
+              {children}
+            </main>
+            <Footer />
           </ScrollProvider>
-        </main>
-        <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );
