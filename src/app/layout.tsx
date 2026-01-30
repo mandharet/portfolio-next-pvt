@@ -1,47 +1,39 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import "./globals.css";
-import StructuredData from "@/components/jsonLD/StructuredData";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { Toaster } from "@/components/ui/shadcn/sonner";
+
 export const metadata: Metadata = {
   title: {
-    default: "Tejas Mandhare | Remote Backend & React Engineer",
+    default: "Tejas Mandhare | Software Engineer",
     template: "%s | Tejas Mandhare",
   },
   description:
-    "Remote Backend & React Engineer specializing in .NET, Go, React, APIs, and scalable system design. Builder mindset, product-focused engineer for distributed systems.",
+    "Software Engineer specializing in .NET, Go, React, APIs, and scalable system design.",
   keywords: [
-    "Remote Backend Engineer",
-    "Remote Full-Stack Engineer",
-    "Remote .NET Developer",
-    "Remote Go Developer",
-    "React Developer Remote",
-    "System Design Engineer",
-    "Distributed Systems Engineer",
-    "API Engineer",
-    "Builder",
+    "Software Engineer",
+    "Full-Stack Developer",
+    ".NET Developer",
+    "Go Developer",
+    "React Developer",
+    "System Design",
   ],
   authors: [{ name: "Tejas Mandhare" }],
   creator: "Tejas Mandhare",
-  metadataBase: new URL("https://tejas.mandhare.com"), 
+  metadataBase: new URL("https://tejas.mandhare.com"),
   openGraph: {
-    title: "Tejas Mandhare | Remote Backend & React Engineer",
-    description:
-      "Remote Backend & React Engineer experienced in .NET, Go, React, APIs, and scalable system design.",
+    type: "website",
+    locale: "en_US",
     url: "https://tejas.mandhare.com",
     siteName: "Tejas Mandhare",
-    locale: "en_US",
-    type: "website",
+    title: "Tejas Mandhare | Software Engineer",
+    description: "Software Engineer specializing in .NET, Go, React, APIs, and scalable system design.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tejas Mandhare | Remote Backend & React Engineer",
-    description:
-      "Remote Backend & React Engineer experienced in .NET, Go, React, APIs, and scalable system design.",
-  },
-  robots: {
-    index: true,
-    follow: true,
+    title: "Tejas Mandhare | Software Engineer",
+    description: "Software Engineer specializing in .NET, Go, React, APIs, and scalable system design.",
   },
 };
 
@@ -51,14 +43,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="bg-white text-gray-900 antialiased">
-        <StructuredData/>
-        <Navbar />
-        <main className="max-w-5xl mx-auto px-4 py-10">
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Navbar />
           {children}
-        </main>
-        <Footer />
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );
