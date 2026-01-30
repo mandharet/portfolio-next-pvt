@@ -6,8 +6,14 @@ import { Button } from "@/components/ui/shadcn/button";
 import { Github, Linkedin, Mail, FileText } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { AboutConfig, PersonalConfig } from "@/types/config";
 
-export default function AboutContent() {
+interface AboutContentProps {
+  config: AboutConfig;
+  personal: PersonalConfig;
+}
+
+export default function AboutContent({ config, personal }: AboutContentProps) {
   const handleEmailClick = (e: React.MouseEvent) => {
     e.preventDefault();
     toast.success("Opening email app...");
@@ -26,61 +32,56 @@ export default function AboutContent() {
               <Mail className="mr-2 h-4 w-4" /> Email
             </Button>
             <Button asChild variant="outline" size="sm">
-              <Link href="https://github.com/yourusername" target="_blank">
+              <Link href={personal.social.github} target="_blank">
                 <Github className="mr-2 h-4 w-4" /> GitHub
               </Link>
             </Button>
             <Button asChild variant="outline" size="sm">
-              <Link href="https://linkedin.com/in/yourusername" target="_blank">
+              <Link href={personal.social.linkedin} target="_blank">
                 <Linkedin className="mr-2 h-4 w-4" /> LinkedIn
               </Link>
             </Button>
-            <Button asChild variant="outline" size="sm">
-              <Link href="/resume.pdf" target="_blank">
-                <FileText className="mr-2 h-4 w-4" /> Resume
-              </Link>
-            </Button>
+            {personal.resume.enabled && (
+              <Button asChild variant="outline" size="sm">
+                <Link href={personal.resume.url} target="_blank">
+                  <FileText className="mr-2 h-4 w-4" /> Resume
+                </Link>
+              </Button>
+            )}
           </div>
         </div>
 
         <Card>
           <CardContent className="pt-6">
             <div className="prose dark:prose-invert max-w-none">
-              <p>
-                I&apos;m a Software Engineer passionate about building scalable backend systems, 
-                APIs, and developer tools. With expertise in .NET, Go, and React, I focus on 
-                creating efficient and maintainable solutions.
-              </p>
-              <p>
-                My approach combines technical excellence with a builder mindset, always 
-                looking for ways to improve systems and deliver value.
-              </p>
+              {config.bio.map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
             </div>
           </CardContent>
         </Card>
 
         <div className="grid md:grid-cols-2 gap-6">
-          <Card>
-            <CardContent className="pt-6">
-              <h3 className="text-xl font-semibold mb-3">Skills</h3>
-              <div className="space-y-2 text-muted-foreground">
-                <p>• .NET & C#</p>
-                <p>• Go</p>
-                <p>• React & Next.js</p>
-                <p>• System Design</p>
-                <p>• API Development</p>
-              </div>
-            </CardContent>
-          </Card>
+          {config.skills.map((category, index) => (
+            <Card key={index}>
+              <CardContent className="pt-6">
+                <h3 className="text-xl font-semibold mb-3">{category.name}</h3>
+                <div className="space-y-2 text-muted-foreground">
+                  {category.items.map((item, idx) => (
+                    <p key={idx}>• {item}</p>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
 
           <Card>
             <CardContent className="pt-6">
               <h3 className="text-xl font-semibold mb-3">Interests</h3>
               <div className="space-y-2 text-muted-foreground">
-                <p>• Distributed Systems</p>
-                <p>• Performance Optimization</p>
-                <p>• Developer Tools</p>
-                <p>• Open Source</p>
+                {config.interests.map((interest, index) => (
+                  <p key={index}>• {interest}</p>
+                ))}
               </div>
             </CardContent>
           </Card>

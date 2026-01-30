@@ -1,0 +1,17 @@
+hero:
+  title: "Tejas Mandhare"
+  subtitle: "Software Engineer"
+  description: "Building scalable backend systems, APIs, and developer tools using .NET, Go, and React."
+
+cta:
+  primary:
+    text: "View Projects"
+    link: "/projects"
+    icon: "ArrowRight"
+  secondary:
+    text: "About Me"
+    link: "/about"
+  resume:
+    text: "Resume"
+    link: "/resume.pdf"
+    icon: "FileText"

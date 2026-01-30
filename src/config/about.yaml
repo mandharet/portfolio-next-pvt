@@ -1,0 +1,28 @@
+bio:
+  - "I'm a Software Engineer passionate about building scalable backend systems, APIs, and developer tools. With expertise in .NET, Go, and React, I focus on creating efficient and maintainable solutions."
+  - "My approach combines technical excellence with a builder mindset, always looking for ways to improve systems and deliver value."
+
+skills:
+  - name: "Backend"
+    items:
+      - ".NET & C#"
+      - "Go"
+      - "Node.js"
+  - name: "Frontend"
+    items:
+      - "React & Next.js"
+      - "TypeScript"
+      - "Tailwind CSS"
+  - name: "Tools & Infrastructure"
+    items:
+      - "Docker"
+      - "PostgreSQL"
+      - "Redis"
+      - "System Design"
+      - "API Development"
+
+interests:
+  - "Distributed Systems"
+  - "Performance Optimization"
+  - "Developer Tools"
+  - "Open Source"

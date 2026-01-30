@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import AboutContent from "@/components/pages/AboutContent";
+import { getAboutConfig, getPersonalConfig } from "@/lib/config";
 
 export const metadata: Metadata = {
   title: "About",
@@ -10,5 +11,8 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  return <AboutContent />;
+  const aboutConfig = getAboutConfig();
+  const personalConfig = getPersonalConfig();
+
+  return <AboutContent config={aboutConfig} personal={personalConfig} />;
 }

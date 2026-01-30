@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import HomeContent from "@/components/pages/HomeContent";
 import PersonStructuredData from "@/components/jsonLD/PersonStructuredData";
+import { getHomeConfig, getPersonalConfig } from "@/lib/config";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -11,10 +12,13 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
+  const homeConfig = getHomeConfig();
+  const personalConfig = getPersonalConfig();
+
   return (
     <>
       <PersonStructuredData />
-      <HomeContent />
+      <HomeContent config={homeConfig} personal={personalConfig} />
     </>
   );
 }

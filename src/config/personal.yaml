@@ -1,0 +1,8 @@
+social:
+  github: "https://github.com/yourusername"
+  linkedin: "https://linkedin.com/in/yourusername"
+  twitter: "https://twitter.com/yourusername"
+
+resume:
+  url: "/resume.pdf"
+  enabled: true
