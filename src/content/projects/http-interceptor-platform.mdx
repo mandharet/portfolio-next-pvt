@@ -1,0 +1,75 @@
+---
+title: "HTTP Interceptor Platform"
+description: "A Charles Proxy–like tool to intercept and modify HTTP requests in real time."
+date: "2024-01-15"
+tech: ["Go", "React", "Proxy", "System Design"]
+github: "https://github.com/example/http-interceptor"
+---
+
+import { CodeBlock } from "@/components/ui/aceternity/code-block";
+
+# HTTP Interceptor Platform
+
+A powerful HTTP debugging proxy tool built with Go and React, designed to intercept, inspect, and modify HTTP/HTTPS traffic in real-time.
+
+## Overview
+
+This project provides developers with a comprehensive solution for debugging web applications by capturing and analyzing network traffic. Similar to Charles Proxy, but with a modern tech stack and enhanced features.
+
+## Key Features
+
+- **Real-time Traffic Interception**: Capture all HTTP/HTTPS requests and responses
+- **Request/Response Modification**: Edit requests before they reach the server
+- **SSL/TLS Support**: Full HTTPS decryption and inspection
+- **WebSocket Support**: Monitor WebSocket connections
+- **Performance Metrics**: Track request timing and performance
+
+## Architecture
+
+The system is built with a Go backend for high-performance proxy handling and a React frontend for the user interface.
+
+<CodeBlock
+  language="go"
+  filename="proxy/handler.go"
+  highlightLines={[8, 9, 10]}
+  code={`package proxy
+
+import (
+    "net/http"
+    "log"
+)
+
+func HandleRequest(w http.ResponseWriter, r *http.Request) {
+    // Intercept and log request
+    log.Printf("Intercepted: %s %s", r.Method, r.URL)
+    
+    // Forward to destination
+    resp, err := http.DefaultTransport.RoundTrip(r)
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusBadGateway)
+        return
+    }
+    defer resp.Body.Close()
+}`}
+/>
+
+## Technical Challenges
+
+Building a reliable HTTP proxy required solving several complex problems:
+
+1. **Certificate Management**: Dynamic SSL certificate generation for HTTPS interception
+2. **Connection Pooling**: Efficient handling of concurrent connections
+3. **Memory Management**: Streaming large payloads without memory overflow
+
+## Results
+
+- Handles 10,000+ concurrent connections
+- Sub-millisecond latency overhead
+- 99.9% uptime in production environments
+
+## Future Enhancements
+
+- GraphQL introspection support
+- Advanced filtering and search
+- Request replay functionality
+- Cloud-based collaboration features

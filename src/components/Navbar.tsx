@@ -2,93 +2,82 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ModeToggle } from "./Modetoggle";
+import { Home, User, Briefcase, FolderOpen, FileText } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "./ui/shadcn/button";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   const navLinks = [
-    { href: "/about", label: "About" },
-    { href: "/experience", label: "Experience" },
-    { href: "/projects", label: "Creator Lab" },
-    { href: "/blog", label: "I Write" },
-    { href: "/resume", label: "Resume" },
+    { href: "/", label: "Home", icon: Home },
+    { href: "/about", label: "About", icon: User },
+    { href: "/experience", label: "Experience", icon: Briefcase },
+    { href: "/projects", label: "Projects", icon: FolderOpen },
+    { href: "/blog", label: "Blog", icon: FileText },
   ];
 
   return (
-    <nav className="fixed w-full border-b bg-white">
-      <div className="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
-        {/* Logo */}
-        <Link href="/" className="font-semibold text-lg">
-          TM
-        </Link>
+    <>
+      {/* Desktop Navbar */}
+      <nav className="fixed top-0 w-full z-50 border-b bg-background/80 backdrop-blur-sm">
+        <div className="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
+          <Link href="/" className="font-bold text-xl">
+            TM
+          </Link>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-6 text-sm">
-          {navLinks.map((link) => (
-            <Link
-            key={link.href}
-            href={link.href}
-            className="hover:text-gray-600"
-            >
-              {link.label}
-            </Link>
-          ))}
-          <ModeToggle/>
-        </div>
-
-        {/* Hamburger */}
-
-        <button
-          onClick={() => setOpen(true)}
-          className="md:hidden text-2xl"
-          aria-label="Open menu"
-        >
-          ☰
-        </button>
-      </div>
-
-      {/* Backdrop */}
-      <div
-        className={`fixed inset-0 z-40 bg-black/40 backdrop-blur-md transition-opacity duration-300
-          ${open ? "opacity-100 visible" : "opacity-0 invisible"}`}
-        onClick={() => setOpen(false)}
-      />
-
-      {/* Slide-in Menu */}
-      <div
-        className={`fixed top-0 z-50 h-full w-full max-w-xl bg-white
-          transform transition-transform duration-300 ease-in-out
-          ${open ? "translate-x-0 right-0" : "translate-x-full -right-100"}`}
-      >
-        {/* Close Button */}
-        <div className="flex justify-between p-4">
-          <ModeToggle/>
-          <button
-            onClick={() => setOpen(false)}
-            className="text-3xl"
-            aria-label="Close menu"
-          >
-            ✕
-          </button>
-        </div>
-
-        {/* Menu Items */}
-        <div className="flex h-full items-center justify-center">
-          <div className="flex flex-col gap-8 text-center">
+          <div className="hidden md:flex items-center gap-6 text-sm">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                onClick={() => setOpen(false)}
-                className="text-4xl font-medium hover:text-gray-600"
+                className={cn(
+                  "hover:text-primary transition-colors",
+                  pathname === link.href && "text-primary font-medium"
+                )}
               >
                 {link.label}
               </Link>
             ))}
+            <Button asChild variant="outline" size="sm">
+              <Link href="/resume.pdf" target="_blank">
+                Resume
+              </Link>
+            </Button>
+            <ModeToggle />
+          </div>
+
+          <div className="md:hidden">
+            <ModeToggle />
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      {/* Mobile Bottom Navigation */}
+      <nav className="fixed bottom-0 w-full z-50 md:hidden border-t bg-background/95 backdrop-blur-sm">
+        <div className="flex justify-around items-center py-2">
+          {navLinks.map((link) => {
+            const Icon = link.icon;
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  "flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-colors",
+                  isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <Icon className="h-5 w-5" />
+                <span className="text-xs">{link.label}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </nav>
+    </>
   );
 }
