@@ -46,7 +46,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <PageLayout>
-      <article className="space-y-6">
+      <article className="space-y-6 pb-20">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>

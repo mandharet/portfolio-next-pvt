@@ -48,7 +48,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
     <>
       <ScrollProgress />
       <PageLayout>
-        <article className="space-y-6">
+        <article className="space-y-6 pb-20">
           <div className="flex items-center justify-between">
             <Link href="/projects">
               <Button variant="ghost" size="sm">
