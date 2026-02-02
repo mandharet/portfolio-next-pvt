@@ -25,6 +25,7 @@ Leading the development of high-performance backend systems and microservices ar
 ### Microservices Migration
 
 Led the migration from monolithic architecture to microservices, resulting in:
+
 - 40% reduction in deployment time
 - 3x improvement in system scalability
 - 99.99% uptime achievement
@@ -40,11 +41,11 @@ Built a real-time data processing pipeline using Go:
   code={`package analytics
 
 func ProcessEvents(events <-chan Event) {
-    for event := range events {
-        // Process event in real-time
-        metrics.Record(event)
-        db.Store(event)
-    }
+for event := range events {
+// Process event in real-time
+metrics.Record(event)
+db.Store(event)
+}
 }`}
 />
 

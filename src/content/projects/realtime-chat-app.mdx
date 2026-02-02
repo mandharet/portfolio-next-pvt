@@ -36,10 +36,10 @@ const redis = require('redis');
 const client = redis.createClient();
 
 io.on('connection', (socket) => {
-  socket.on('message', async (data) => {
-    await saveMessage(data);
-    io.to(data.room).emit('message', data);
-  });
+socket.on('message', async (data) => {
+await saveMessage(data);
+io.to(data.room).emit('message', data);
+});
 });`}
 />
 

@@ -40,7 +40,7 @@ export default function Navbar({ resumeEnabled }: NavbarProps) {
                 href={link.href}
                 className={cn(
                   "hover:text-primary transition-colors",
-                  pathname === link.href && "text-primary font-medium"
+                  pathname === link.href && "text-primary font-medium",
                 )}
               >
                 {link.label}
@@ -48,9 +48,7 @@ export default function Navbar({ resumeEnabled }: NavbarProps) {
             ))}
             {resumeEnabled && (
               <Button asChild variant="outline" size="sm">
-                <Link href="/resume">
-                  Resume
-                </Link>
+                <Link href="/resume">Resume</Link>
               </Button>
             )}
             <ModeToggle />
@@ -74,7 +72,9 @@ export default function Navbar({ resumeEnabled }: NavbarProps) {
                 href={link.href}
                 className={cn(
                   "flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-colors",
-                  isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                  isActive
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground",
                 )}
               >
                 <Icon className="h-5 w-5" />

@@ -73,6 +73,7 @@ All your information is in simple YAML files:
 Create `.mdx` files in `src/content/`:
 
 **Blog Post** (`src/content/blogs/my-post.mdx`):
+
 ```mdx
 ---
 title: "My First Post"
@@ -83,10 +84,12 @@ readingTime: "5 min read" # Optional
 ---
 
 # Hello World!
+
 Your content here...
 ```
 
 **Project** (`src/content/projects/my-project.mdx`):
+
 ```mdx
 ---
 title: "My Project"
@@ -98,10 +101,12 @@ link: "https://demo.com" # Optional
 ---
 
 # My Awesome Project
+
 Project details...
 ```
 
 **Experience** (`src/content/experiences/my-job.mdx`):
+
 ```mdx
 ---
 company: "Company Name"
@@ -113,6 +118,7 @@ date: "2023-01-01"
 ---
 
 # My Experience
+
 Details about your role...
 ```
 
@@ -137,12 +143,14 @@ That's it! Your content appears automatically.
 ## 🚀 Deploy Your Portfolio
 
 ### Vercel (Recommended)
+
 1. Push your code to GitHub
 2. Go to [vercel.com](https://vercel.com)
 3. Import your repository
 4. Click Deploy - Done! 🎉
 
 ### Netlify
+
 1. Push your code to GitHub
 2. Go to [netlify.com](https://netlify.com)
 3. Import your repository
@@ -174,6 +182,7 @@ That's it! Your content appears automatically.
 **MIT License** - Free to use for personal and commercial projects!
 
 Feel free to:
+
 - ✅ Use for your portfolio
 - ✅ Modify as you like
 - ✅ Deploy anywhere
@@ -203,6 +212,7 @@ Found a bug? Have a feature idea? Contributions are welcome!
 ## 🌟 Show Your Support
 
 If you find this template helpful:
+
 - ⭐ Star this repository
 - 🐛 Report bugs
 - 💡 Suggest features

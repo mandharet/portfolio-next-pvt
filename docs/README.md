@@ -11,7 +11,9 @@ This portfolio uses **YAML-based configuration** for easy customization without 
 ## Key Concepts
 
 ### YAML Configuration
+
 All site settings are managed through YAML files in `src/config/`:
+
 - `site.yaml` - Site metadata, SEO settings
 - `personal.yaml` - Social links, resume
 - `home.yaml` - Homepage content
@@ -19,13 +21,17 @@ All site settings are managed through YAML files in `src/config/`:
 - `navigation.yaml` - Navigation menu
 
 ### MDX Content
+
 Content is written in MDX format in `src/content/`:
+
 - `blogs/` - Blog posts
 - `projects/` - Project showcases
 - `experiences/` - Work experience
 
 ### Dynamic SEO
+
 All SEO metadata is generated dynamically from YAML configuration:
+
 - Sitemap auto-generated from content
 - Metadata loaded from `site.yaml`
 - Structured data (JSON-LD) from config

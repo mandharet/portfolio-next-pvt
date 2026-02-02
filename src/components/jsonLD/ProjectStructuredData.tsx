@@ -5,9 +5,11 @@ interface ProjectStructuredDataProps {
   project: ProjectMeta;
 }
 
-export default function ProjectStructuredData({ project }: ProjectStructuredDataProps) {
+export default function ProjectStructuredData({
+  project,
+}: ProjectStructuredDataProps) {
   const siteConfig = getSiteConfig();
-  
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "SoftwareSourceCode",

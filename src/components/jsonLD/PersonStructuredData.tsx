@@ -3,7 +3,7 @@ import { getSiteConfig, getPersonalConfig } from "@/lib/config";
 export default function PersonStructuredData() {
   const siteConfig = getSiteConfig();
   const personalConfig = getPersonalConfig();
-  
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Person",

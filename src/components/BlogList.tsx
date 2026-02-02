@@ -1,7 +1,13 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/shadcn/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/shadcn/card";
 import { Badge } from "@/components/ui/shadcn/badge";
 import { Button } from "@/components/ui/shadcn/button";
 import Link from "next/link";
@@ -45,7 +51,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
   const paginatedPosts = filteredAndSortedPosts.slice(
     startIndex,
-    startIndex + POSTS_PER_PAGE
+    startIndex + POSTS_PER_PAGE,
   );
 
   const handleTagFilter = (tag: string | null) => {

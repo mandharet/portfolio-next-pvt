@@ -4,12 +4,12 @@ import { getAllProjects } from "@/lib/project";
 import { getAllExperiences } from "@/lib/experience";
 import { getSiteConfig } from "@/lib/config";
 
-export const dynamic = 'force-static';
+export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteConfig = getSiteConfig();
   const baseUrl = siteConfig.domain;
-  
+
   const posts = getAllPosts();
   const projects = getAllProjects();
   const experiences = getAllExperiences();

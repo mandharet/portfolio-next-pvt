@@ -22,13 +22,13 @@ The most basic hook for state management:
   code={`import { useState } from 'react';
 
 function Counter() {
-  const [count, setCount] = useState(0);
-  
-  return (
-    <button onClick={() => setCount(count + 1)}>
-      Count: {count}
-    </button>
-  );
+const [count, setCount] = useState(0);
+
+return (
+<button onClick={() => setCount(count + 1)}>
+Count: {count}
+</button>
+);
 }`}
 />
 
@@ -42,15 +42,15 @@ Handle side effects:
   code={`import { useState, useEffect } from 'react';
 
 function DataFetcher() {
-  const [data, setData] = useState(null);
-  
-  useEffect(() => {
-    fetch('/api/data')
-      .then(res => res.json())
-      .then(setData);
-  }, []);
-  
-  return <div>{data?.title}</div>;
+const [data, setData] = useState(null);
+
+useEffect(() => {
+fetch('/api/data')
+.then(res => res.json())
+.then(setData);
+}, []);
+
+return <div>{data?.title}</div>;
 }`}
 />
 

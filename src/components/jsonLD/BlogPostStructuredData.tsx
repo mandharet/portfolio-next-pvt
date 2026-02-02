@@ -5,9 +5,11 @@ interface BlogPostStructuredDataProps {
   post: BlogPost;
 }
 
-export default function BlogPostStructuredData({ post }: BlogPostStructuredDataProps) {
+export default function BlogPostStructuredData({
+  post,
+}: BlogPostStructuredDataProps) {
   const siteConfig = getSiteConfig();
-  
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",

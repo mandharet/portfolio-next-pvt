@@ -14,6 +14,7 @@ Portfolio built with Next.js 15 App Router using YAML for configuration and MDX 
 All site settings stored in YAML files and loaded at build time using `js-yaml` library.
 
 **Config Files:**
+
 - `site.yaml` - Global settings, SEO metadata
 - `personal.yaml` - Social links, resume
 - `home.yaml` - Homepage content
@@ -32,6 +33,7 @@ All site settings stored in YAML files and loaded at build time using `js-yaml` 
 Content written in MDX format with YAML frontmatter for metadata.
 
 **Content Types:**
+
 - `blogs/` - Blog posts
 - `projects/` - Project showcases
 - `experiences/` - Work experience
@@ -43,16 +45,19 @@ Content written in MDX format with YAML frontmatter for metadata.
 ## SEO Implementation
 
 **Dynamic Metadata:**
+
 - Loaded from YAML config (`src/config/site.yaml`)
 - Generated per-page in `generateMetadata()` functions
 - Includes Open Graph, Twitter Cards, canonical URLs
 
 **Sitemap:**
+
 - Auto-generated in `src/app/sitemap.ts`
 - Reads all content from MDX files
 - Uses domain from `site.yaml`
 
 **Structured Data (JSON-LD):**
+
 - Components in `src/components/jsonLD/`
 - Person, BlogPosting, SoftwareSourceCode schemas
 - Data loaded from YAML config
@@ -109,11 +114,13 @@ Runtime:
 ## Customization
 
 **Add New Config:**
+
 1. Create YAML file in `src/config/`
 2. Define TypeScript type in `src/types/config.ts`
 3. Create loader function in `src/lib/config.ts`
 
 **Add New Content:**
+
 1. Create MDX file in `src/content/`
 2. Define TypeScript type in `src/types/`
 3. Create utility functions in `src/lib/`

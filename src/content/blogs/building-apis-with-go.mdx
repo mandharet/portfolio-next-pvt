@@ -54,18 +54,19 @@ import (
 )
 
 type Response struct {
-    Message string \`json:"message"\`
-    Status  int    \`json:"status"\`
+Message string \`json:"message"\`
+Status int \`json:"status"\`
 }
 
-func HealthCheck(w http.ResponseWriter, r *http.Request) {
-    response := Response{
-        Message: "API is running",
-        Status:  200,
-    }
-    
+func HealthCheck(w http.ResponseWriter, r \*http.Request) {
+response := Response{
+Message: "API is running",
+Status: 200,
+}
+
     w.Header().Set("Content-Type", "application/json")
     json.NewEncoder(w).Encode(response)
+
 }`}
 />
 

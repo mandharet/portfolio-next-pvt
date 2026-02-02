@@ -44,15 +44,16 @@ import (
 )
 
 func main() {
-    r := gin.Default()
-    
+r := gin.Default()
+
     r.GET("/api/users", func(c *gin.Context) {
         c.JSON(http.StatusOK, gin.H{
             "users": []string{"Alice", "Bob"},
         })
     })
-    
+
     r.Run(":8080")
+
 }`}
 />
 
@@ -88,13 +89,13 @@ Connect to PostgreSQL:
     _ "github.com/lib/pq"
 )
 
-func ConnectDB() (*sql.DB, error) {
-    connStr := "postgres://user:pass@localhost/dbname"
-    db, err := sql.Open("postgres", connStr)
-    if err != nil {
-        return nil, err
-    }
-    return db, nil
+func ConnectDB() (\*sql.DB, error) {
+connStr := "postgres://user:pass@localhost/dbname"
+db, err := sql.Open("postgres", connStr)
+if err != nil {
+return nil, err
+}
+return db, nil
 }`}
 />
 

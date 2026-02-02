@@ -35,9 +35,9 @@ Trained on millions of code reviews:
   code={`import tensorflow as tf
 
 model = tf.keras.Sequential([
-    tf.keras.layers.Embedding(vocab_size, 128),
-    tf.keras.layers.LSTM(256),
-    tf.keras.layers.Dense(num_classes, activation='softmax')
+tf.keras.layers.Embedding(vocab_size, 128),
+tf.keras.layers.LSTM(256),
+tf.keras.layers.Dense(num_classes, activation='softmax')
 ])
 
 model.compile(optimizer='adam', loss='categorical_crossentropy')`}
@@ -54,8 +54,8 @@ app = FastAPI()
 
 @app.post("/review")
 async def review_code(code: str):
-    suggestions = model.predict(code)
-    return {"suggestions": suggestions}`}
+suggestions = model.predict(code)
+return {"suggestions": suggestions}`}
 />
 
 ## Results

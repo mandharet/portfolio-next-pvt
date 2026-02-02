@@ -39,10 +39,10 @@ import (
     "log"
 )
 
-func HandleRequest(w http.ResponseWriter, r *http.Request) {
-    // Intercept and log request
-    log.Printf("Intercepted: %s %s", r.Method, r.URL)
-    
+func HandleRequest(w http.ResponseWriter, r \*http.Request) {
+// Intercept and log request
+log.Printf("Intercepted: %s %s", r.Method, r.URL)
+
     // Forward to destination
     resp, err := http.DefaultTransport.RoundTrip(r)
     if err != nil {
@@ -50,6 +50,7 @@ func HandleRequest(w http.ResponseWriter, r *http.Request) {
         return
     }
     defer resp.Body.Close()
+
 }`}
 />
 
