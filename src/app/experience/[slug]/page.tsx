@@ -10,6 +10,14 @@ import { CodeBlock } from "@/components/ui/aceternity/code-block";
 import { ScrollProgress } from "@/components/ui/aceternity/scroll-progress";
 import { Button } from "@/components/ui/shadcn/button";
 import ExperienceStructuredData from "@/components/jsonLD/ExperienceStructuredData";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/shadcn/breadcrumb";
 
 export async function generateStaticParams() {
   const experiences = getAllExperiences();
@@ -18,7 +26,11 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   const result = getExperienceBySlug(slug);
   if (!result) return { title: "Experience Not Found" };
@@ -29,12 +41,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export default async function ExperienceDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function ExperienceDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
-  
+
   // Artificial delay to show loading state
-  await new Promise(resolve => setTimeout(resolve, 1500));
-  
+  await new Promise((resolve) => setTimeout(resolve, 1500));
+
   const result = getExperienceBySlug(slug);
 
   if (!result) {
@@ -45,31 +61,44 @@ export default async function ExperienceDetailPage({ params }: { params: Promise
   const allExperiences = getAllExperiences();
   const currentIndex = allExperiences.findIndex((e) => e.slug === slug);
   const prevExp = currentIndex > 0 ? allExperiences[currentIndex - 1] : null;
-  const nextExp = currentIndex < allExperiences.length - 1 ? allExperiences[currentIndex + 1] : null;
-  const multipleExperiences= allExperiences.length > 1;
+  const nextExp =
+    currentIndex < allExperiences.length - 1
+      ? allExperiences[currentIndex + 1]
+      : null;
+  const multipleExperiences = allExperiences.length > 1;
   return (
     <>
       <ExperienceStructuredData experience={experience} />
       <ScrollProgress />
+      <div className="sticky top-15 z-40 bg-background/95 backdrop-blur-sm py-4 border-b mb-10">
+        <div className="max-w-5xl mx-auto px-4">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/experience">Experience</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>{experience.role}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+      </div>
       <PageLayout>
         <article className="space-y-6 pb-20">
-          <div className="flex items-center justify-between">
-            <Link href="/experience">
-              <Button variant="ghost" size="sm">
-                <ChevronLeft className="h-4 w-4 mr-1" />
-                Back to Experience
-              </Button>
-            </Link>
-          </div>
-
           <div className="space-y-4">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Calendar className="h-4 w-4" />
               <span>{experience.period}</span>
             </div>
 
-            <h1 className="text-4xl md:text-5xl font-bold">{experience.role}</h1>
-            <p className="text-2xl text-muted-foreground">{experience.company}</p>
+            <h1 className="text-4xl md:text-5xl font-bold">
+              {experience.role}
+            </h1>
+            <p className="text-2xl text-muted-foreground">
+              {experience.company}
+            </p>
             <p className="text-lg">{experience.description}</p>
 
             <div className="flex flex-wrap gap-2">
@@ -92,8 +121,12 @@ export default async function ExperienceDetailPage({ params }: { params: Promise
                     <Button variant="outline" className="justify-start">
                       <ChevronLeft className="h-4 w-4 mr-2" />
                       <div className="flex flex-col items-start">
-                        <span className="text-xs text-muted-foreground">Previous</span>
-                        <span className="hidden sm:block font-medium">{prevExp.role}</span>
+                        <span className="text-xs text-muted-foreground">
+                          Previous
+                        </span>
+                        <span className="hidden sm:block font-medium">
+                          {prevExp.role}
+                        </span>
                       </div>
                     </Button>
                   </Link>
@@ -102,8 +135,12 @@ export default async function ExperienceDetailPage({ params }: { params: Promise
                   <Link href={`/experience/${nextExp.slug}`}>
                     <Button variant="outline" className="justify-end">
                       <div className="flex flex-col items-end">
-                        <span className="text-xs text-muted-foreground">Next</span>
-                        <span className="hidden sm:block font-medium">{nextExp.role}</span>
+                        <span className="text-xs text-muted-foreground">
+                          Next
+                        </span>
+                        <span className="hidden sm:block font-medium">
+                          {nextExp.role}
+                        </span>
                       </div>
                       <ChevronRight className="h-4 w-4 ml-2" />
                     </Button>

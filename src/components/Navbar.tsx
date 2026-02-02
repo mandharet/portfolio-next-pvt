@@ -28,7 +28,7 @@ export default function Navbar({ resumeEnabled }: NavbarProps) {
     <>
       {/* Desktop Navbar */}
       <nav className="fixed top-0 w-full z-50 border-b bg-background/80 backdrop-blur-sm">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+        <div className="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
           <Link href="/" className="font-bold text-xl">
             TM
           </Link>

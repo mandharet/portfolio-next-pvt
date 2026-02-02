@@ -27,7 +27,11 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   const result = getPostBySlug(slug);
   if (!result) return { title: "Post Not Found" };
@@ -60,12 +64,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function BlogPostPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
-  
+
   // Artificial delay to show loading state
-  await new Promise(resolve => setTimeout(resolve, 1500));
-  
+  await new Promise((resolve) => setTimeout(resolve, 1500));
+
   const result = getPostBySlug(slug);
 
   if (!result) {
@@ -76,115 +84,127 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const allPosts = getAllPosts();
   const currentIndex = allPosts.findIndex((p) => p.slug === slug);
   const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
-  const nextPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+  const nextPost =
+    currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
   const multiplePosts = allPosts.length > 1;
 
   return (
     <>
       <BlogPostStructuredData post={post} />
       <ScrollProgress />
+
+      <div className="sticky top-15 z-40 bg-background/95 backdrop-blur-sm py-4 border-b mb-10">
+        <div className="max-w-5xl mx-auto px-4">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/blog">Blog</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>{post.title}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+      </div>
+
       <PageLayout>
         <article className="space-y-6 pb-20">
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/">Home</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/blog">Blog</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>{post.title}</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-
-        <div className="space-y-4">
-          <div className="flex items-center gap-4 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <Calendar className="h-4 w-4" />
-              <time suppressHydrationWarning>{new Date(post.date).toLocaleDateString()}</time>
-            </div>
-            {post.readingTime && (
+          <div className="space-y-4">
+            <div className="flex items-center gap-4 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4" />
-                <span>{post.readingTime}</span>
+                <Calendar className="h-4 w-4" />
+                <time suppressHydrationWarning>
+                  {new Date(post.date).toLocaleDateString()}
+                </time>
+              </div>
+              {post.readingTime && (
+                <div className="flex items-center gap-2">
+                  <Clock className="h-4 w-4" />
+                  <span>{post.readingTime}</span>
+                </div>
+              )}
+            </div>
+
+            <h1 className="text-4xl md:text-5xl font-bold">{post.title}</h1>
+            <p className="text-xl text-muted-foreground">{post.description}</p>
+
+            {post.tags.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {post.tags.map((tag) => (
+                  <Badge key={tag} variant="secondary">
+                    {tag}
+                  </Badge>
+                ))}
               </div>
             )}
           </div>
 
-          <h1 className="text-4xl md:text-5xl font-bold">{post.title}</h1>
-          <p className="text-xl text-muted-foreground">{post.description}</p>
+          <div className="prose dark:prose-invert max-w-none">
+            <MDXRemote source={content} components={{ CodeBlock }} />
+          </div>
 
-          {post.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {post.tags.map((tag) => (
-                <Badge key={tag} variant="secondary">
-                  {tag}
-                </Badge>
-              ))}
+          {post.relatedPosts && post.relatedPosts.length > 0 && (
+            <Card>
+              <CardContent className="pt-6">
+                <h3 className="text-xl font-semibold mb-4">Related Posts</h3>
+                <div className="space-y-2">
+                  {post.relatedPosts.map((slug) => {
+                    const relatedPost = getPostBySlug(slug);
+                    if (!relatedPost) return null;
+                    return (
+                      <Link
+                        key={slug}
+                        href={`/blog/${slug}`}
+                        className="block text-primary hover:underline"
+                      >
+                        {relatedPost.post.title}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {multiplePosts && (
+            <div className="pt-6 border-t">
+              <div className="flex flex-wrap justify-between gap-3">
+                {prevPost && (
+                  <Link href={`/blog/${prevPost.slug}`}>
+                    <Button variant="outline" className="justify-start">
+                      <ChevronLeft className="h-4 w-4 mr-2" />
+                      <div className="flex flex-col items-start">
+                        <span className="text-xs text-muted-foreground">
+                          Previous
+                        </span>
+                        <span className="hidden sm:block font-medium">
+                          {prevPost.title}
+                        </span>
+                      </div>
+                    </Button>
+                  </Link>
+                )}
+                {nextPost && (
+                  <Link href={`/blog/${nextPost.slug}`}>
+                    <Button variant="outline" className="justify-end">
+                      <div className="flex flex-col items-end">
+                        <span className="text-xs text-muted-foreground">
+                          Next
+                        </span>
+                        <span className="hidden sm:block font-medium">
+                          {nextPost.title}
+                        </span>
+                      </div>
+                      <ChevronRight className="h-4 w-4 ml-2" />
+                    </Button>
+                  </Link>
+                )}
+              </div>
             </div>
           )}
-        </div>
-
-        <div className="prose dark:prose-invert max-w-none">
-          <MDXRemote source={content} components={{ CodeBlock }} />
-        </div>
-
-        {post.relatedPosts && post.relatedPosts.length > 0 && (
-          <Card>
-            <CardContent className="pt-6">
-              <h3 className="text-xl font-semibold mb-4">Related Posts</h3>
-              <div className="space-y-2">
-                {post.relatedPosts.map((slug) => {
-                  const relatedPost = getPostBySlug(slug);
-                  if (!relatedPost) return null;
-                  return (
-                    <Link
-                      key={slug}
-                      href={`/blog/${slug}`}
-                      className="block text-primary hover:underline"
-                    >
-                      {relatedPost.post.title}
-                    </Link>
-                  );
-                })}
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {multiplePosts && (
-          <div className="pt-6 border-t">
-            <div className="flex flex-wrap justify-between gap-3">
-              {prevPost && (
-                <Link href={`/blog/${prevPost.slug}`}>
-                  <Button variant="outline" className="justify-start">
-                    <ChevronLeft className="h-4 w-4 mr-2" />
-                    <div className="flex flex-col items-start">
-                      <span className="text-xs text-muted-foreground">Previous</span>
-                      <span className="hidden sm:block font-medium">{prevPost.title}</span>
-                    </div>
-                  </Button>
-                </Link>
-              )}
-              {nextPost && (
-                <Link href={`/blog/${nextPost.slug}`}>
-                  <Button variant="outline" className="justify-end">
-                    <div className="flex flex-col items-end">
-                      <span className="text-xs text-muted-foreground">Next</span>
-                      <span className="hidden sm:block font-medium">{nextPost.title}</span>
-                    </div>
-                    <ChevronRight className="h-4 w-4 ml-2" />
-                  </Button>
-                </Link>
-              )}
-            </div>
-          </div>
-        )}
-      </article>
+        </article>
       </PageLayout>
     </>
   );

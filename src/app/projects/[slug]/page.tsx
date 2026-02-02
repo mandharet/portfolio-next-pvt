@@ -4,13 +4,27 @@ import { getSiteConfig } from "@/lib/config";
 import PageLayout from "@/components/PageLayout";
 import { Badge } from "@/components/ui/shadcn/badge";
 import { Card, CardContent } from "@/components/ui/shadcn/card";
-import { ExternalLink, Github, FileText, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  ExternalLink,
+  Github,
+  FileText,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { CodeBlock } from "@/components/ui/aceternity/code-block";
 import { ScrollProgress } from "@/components/ui/aceternity/scroll-progress";
 import { Button } from "@/components/ui/shadcn/button";
 import ProjectStructuredData from "@/components/jsonLD/ProjectStructuredData";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/shadcn/breadcrumb";
 
 export async function generateStaticParams() {
   const projects = getAllProjects();
@@ -19,7 +33,11 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   const result = getProjectBySlug(slug);
   if (!result) return { title: "Project Not Found" };
@@ -51,12 +69,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function ProjectDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
-  
+
   // Artificial delay to show loading state
-  await new Promise(resolve => setTimeout(resolve, 1500));
-  
+  await new Promise((resolve) => setTimeout(resolve, 1500));
+
   const result = getProjectBySlug(slug);
 
   if (!result) {
@@ -67,7 +89,10 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
   const allProjects = getAllProjects();
   const currentIndex = allProjects.findIndex((p) => p.slug === slug);
   const prevProject = currentIndex > 0 ? allProjects[currentIndex - 1] : null;
-  const nextProject = currentIndex < allProjects.length - 1 ? allProjects[currentIndex + 1] : null;
+  const nextProject =
+    currentIndex < allProjects.length - 1
+      ? allProjects[currentIndex + 1]
+      : null;
   if (!project) notFound();
   const multipleProjects = allProjects.length > 1;
 
@@ -75,20 +100,28 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
     <>
       <ProjectStructuredData project={project} />
       <ScrollProgress />
+      <div className="sticky top-15 z-40 bg-background/95 backdrop-blur-sm py-4 border-b mb-10">
+        <div className="max-w-5xl mx-auto px-4">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/projects">Projects</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>{project.title}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+      </div>
       <PageLayout>
         <article className="space-y-6 pb-20">
-          <div className="flex items-center justify-between">
-            <Link href="/projects">
-              <Button variant="ghost" size="sm">
-                <ChevronLeft className="h-4 w-4 mr-1" />
-                Back to Projects
-              </Button>
-            </Link>
-          </div>
-
           <div className="space-y-4">
             <h1 className="text-4xl md:text-5xl font-bold">{project.title}</h1>
-            <p className="text-xl text-muted-foreground">{project.description}</p>
+            <p className="text-xl text-muted-foreground">
+              {project.description}
+            </p>
 
             <div className="flex flex-wrap gap-2">
               {project.tech.map((tech) => (
@@ -137,8 +170,12 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                     <Button variant="outline" className="justify-start">
                       <ChevronLeft className="h-4 w-4 mr-2" />
                       <div className="flex flex-col items-start">
-                        <span className="text-xs text-muted-foreground">Previous</span>
-                        <span className="hidden sm:block font-medium">{prevProject.title}</span>
+                        <span className="text-xs text-muted-foreground">
+                          Previous
+                        </span>
+                        <span className="hidden sm:block font-medium">
+                          {prevProject.title}
+                        </span>
                       </div>
                     </Button>
                   </Link>
@@ -147,8 +184,12 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                   <Link href={`/projects/${nextProject.slug}`}>
                     <Button variant="outline" className="justify-end">
                       <div className="flex flex-col items-end">
-                        <span className="text-xs text-muted-foreground">Next</span>
-                        <span className="hidden sm:block font-medium">{nextProject.title}</span>
+                        <span className="text-xs text-muted-foreground">
+                          Next
+                        </span>
+                        <span className="hidden sm:block font-medium">
+                          {nextProject.title}
+                        </span>
                       </div>
                       <ChevronRight className="h-4 w-4 ml-2" />
                     </Button>
