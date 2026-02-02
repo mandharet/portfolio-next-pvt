@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getProjectBySlug, getAllProjects } from "@/lib/project";
+import { getSiteConfig } from "@/lib/config";
 import PageLayout from "@/components/PageLayout";
 import { Badge } from "@/components/ui/shadcn/badge";
 import { Card, CardContent } from "@/components/ui/shadcn/card";
@@ -9,6 +10,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { CodeBlock } from "@/components/ui/aceternity/code-block";
 import { ScrollProgress } from "@/components/ui/aceternity/scroll-progress";
 import { Button } from "@/components/ui/shadcn/button";
+import ProjectStructuredData from "@/components/jsonLD/ProjectStructuredData";
 
 export async function generateStaticParams() {
   const projects = getAllProjects();
@@ -22,14 +24,39 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const result = getProjectBySlug(slug);
   if (!result) return { title: "Project Not Found" };
 
+  const siteConfig = getSiteConfig();
+  const canonicalUrl = `${siteConfig.domain}/projects/${slug}`;
+
   return {
     title: result.project.title,
     description: result.project.description,
+    keywords: result.project.tech,
+    authors: [{ name: siteConfig.name }],
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title: result.project.title,
+      description: result.project.description,
+      type: "article",
+      url: canonicalUrl,
+      publishedTime: result.project.date,
+      tags: result.project.tech,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: result.project.title,
+      description: result.project.description,
+    },
   };
 }
 
 export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  
+  // Artificial delay to show loading state
+  await new Promise(resolve => setTimeout(resolve, 1500));
+  
   const result = getProjectBySlug(slug);
 
   if (!result) {
@@ -46,6 +73,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
 
   return (
     <>
+      <ProjectStructuredData project={project} />
       <ScrollProgress />
       <PageLayout>
         <article className="space-y-6 pb-20">
@@ -101,39 +129,34 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           <div className="prose dark:prose-invert max-w-none">
             <MDXRemote source={content} components={{ CodeBlock }} />
           </div>
-{multipleProjects&&(
-          <Card>
-            <CardContent className="pt-6">
-              <div className="grid grid-cols-2 gap-3">
-                {prevProject ? (
+          {multipleProjects && (
+            <div className="pt-6 border-t">
+              <div className="flex flex-wrap justify-between gap-3">
+                {prevProject && (
                   <Link href={`/projects/${prevProject.slug}`}>
-                    <Button variant="outline" className="w-full h-auto py-3 flex-col items-start">
-                      <span className="text-xs text-muted-foreground mb-1 flex items-center">
-                        <ChevronLeft className="h-3 w-3 mr-1" />
-                        Previous
-                      </span>
-                      <span className="text-sm font-medium line-clamp-2 text-left">{prevProject.title}</span>
+                    <Button variant="outline" className="justify-start">
+                      <ChevronLeft className="h-4 w-4 mr-2" />
+                      <div className="flex flex-col items-start">
+                        <span className="text-xs text-muted-foreground">Previous</span>
+                        <span className="hidden sm:block font-medium">{prevProject.title}</span>
+                      </div>
                     </Button>
                   </Link>
-                ) : (
-                  <div />
                 )}
-                {nextProject ? (
+                {nextProject && (
                   <Link href={`/projects/${nextProject.slug}`}>
-                    <Button variant="outline" className="w-full h-auto py-3 flex-col items-end">
-                      <span className="text-xs text-muted-foreground mb-1 flex items-center">
-                        Next
-                        <ChevronRight className="h-3 w-3 ml-1" />
-                      </span>
-                      <span className="text-sm font-medium line-clamp-2 text-right">{nextProject.title}</span>
+                    <Button variant="outline" className="justify-end">
+                      <div className="flex flex-col items-end">
+                        <span className="text-xs text-muted-foreground">Next</span>
+                        <span className="hidden sm:block font-medium">{nextProject.title}</span>
+                      </div>
+                      <ChevronRight className="h-4 w-4 ml-2" />
                     </Button>
                   </Link>
-                ) : (
-                  <div />
                 )}
               </div>
-            </CardContent>
-          </Card>)}
+            </div>
+          )}
         </article>
       </PageLayout>
     </>

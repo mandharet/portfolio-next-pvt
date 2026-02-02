@@ -24,7 +24,7 @@ export default function AboutContent({ config, personal }: AboutContentProps) {
 
   return (
     <PageLayout>
-      <div className="space-y-8 py-8">
+      <div className="space-y-6 pb-30">
         <div>
           <h1 className="text-4xl font-bold mb-4">About Me</h1>
           <div className="flex flex-wrap gap-3">

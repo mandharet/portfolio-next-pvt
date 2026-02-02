@@ -3,37 +3,32 @@ import Navbar from "@/components/Navbar";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/shadcn/sonner";
+import { getSiteConfig } from "@/lib/config";
+
+const siteConfig = getSiteConfig();
 
 export const metadata: Metadata = {
   title: {
-    default: "Tejas Mandhare | Software Engineer",
-    template: "%s | Tejas Mandhare",
+    default: `${siteConfig.name} | ${siteConfig.title}`,
+    template: `%s | ${siteConfig.name}`,
   },
-  description:
-    "Software Engineer specializing in .NET, Go, React, APIs, and scalable system design.",
-  keywords: [
-    "Software Engineer",
-    "Full-Stack Developer",
-    ".NET Developer",
-    "Go Developer",
-    "React Developer",
-    "System Design",
-  ],
-  authors: [{ name: "Tejas Mandhare" }],
-  creator: "Tejas Mandhare",
-  metadataBase: new URL("https://tejas.mandhare.com"),
+  description: siteConfig.description,
+  keywords: siteConfig.keywords,
+  authors: [{ name: siteConfig.name }],
+  creator: siteConfig.name,
+  metadataBase: new URL(siteConfig.domain),
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://tejas.mandhare.com",
-    siteName: "Tejas Mandhare",
-    title: "Tejas Mandhare | Software Engineer",
-    description: "Software Engineer specializing in .NET, Go, React, APIs, and scalable system design.",
+    url: siteConfig.domain,
+    siteName: siteConfig.name,
+    title: `${siteConfig.name} | ${siteConfig.title}`,
+    description: siteConfig.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tejas Mandhare | Software Engineer",
-    description: "Software Engineer specializing in .NET, Go, React, APIs, and scalable system design.",
+    title: `${siteConfig.name} | ${siteConfig.title}`,
+    description: siteConfig.description,
   },
 };
 

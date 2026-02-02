@@ -1,16 +1,23 @@
+import { getSiteConfig, getPersonalConfig } from "@/lib/config";
+
 export default function PersonStructuredData() {
+  const siteConfig = getSiteConfig();
+  const personalConfig = getPersonalConfig();
+  
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: "Tejas Mandhare",
-    jobTitle: "Software Engineer",
-    description: "Software Engineer specializing in .NET, Go, React, APIs, and scalable system design.",
-    url: "https://tejas.mandhare.com",
+    name: siteConfig.name,
+    jobTitle: siteConfig.title,
+    description: siteConfig.description,
+    url: siteConfig.domain,
+    email: siteConfig.email,
     sameAs: [
-      "https://github.com/yourusername",
-      "https://linkedin.com/in/yourusername",
-    ],
-    knowsAbout: [".NET", "Go", "React", "System Design", "API Development"],
+      personalConfig.social.github,
+      personalConfig.social.linkedin,
+      ...(personalConfig.social.twitter ? [personalConfig.social.twitter] : []),
+    ].filter(Boolean),
+    knowsAbout: siteConfig.keywords,
   };
 
   return (

@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import HomeContent from "@/components/pages/HomeContent";
 import PersonStructuredData from "@/components/jsonLD/PersonStructuredData";
-import { getHomeConfig, getPersonalConfig } from "@/lib/config";
+import { getHomeConfig, getPersonalConfig, getSiteConfig } from "@/lib/config";
+
+const siteConfig = getSiteConfig();
 
 export const metadata: Metadata = {
   title: "Home",
-  description: "Software Engineer specializing in .NET, Go, React, APIs, and scalable system design.",
+  description: siteConfig.description,
   alternates: {
-    canonical: "https://tejas.mandhare.com",
+    canonical: siteConfig.domain,
   },
 };
 

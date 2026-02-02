@@ -30,6 +30,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ExperienceDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  
+  // Artificial delay to show loading state
+  await new Promise(resolve => setTimeout(resolve, 1500));
+  
   const result = getExperienceBySlug(slug);
 
   if (!result) {
@@ -78,39 +82,34 @@ export default async function ExperienceDetailPage({ params }: { params: Promise
           <div className="prose dark:prose-invert max-w-none">
             <MDXRemote source={content} components={{ CodeBlock }} />
           </div>
-{multipleExperiences&&(
-          <Card>
-            <CardContent className="pt-6">
-              <div className="grid grid-cols-2 gap-3">
-                {prevExp ? (
+          {multipleExperiences && (
+            <div className="pt-6 border-t">
+              <div className="flex flex-wrap justify-between gap-3">
+                {prevExp && (
                   <Link href={`/experience/${prevExp.slug}`}>
-                    <Button variant="outline" className="w-full h-auto py-3 flex-col items-start">
-                      <span className="text-xs text-muted-foreground mb-1 flex items-center">
-                        <ChevronLeft className="h-3 w-3 mr-1" />
-                        Previous
-                      </span>
-                      <span className="text-sm font-medium line-clamp-2 text-left">{prevExp.company}</span>
+                    <Button variant="outline" className="justify-start">
+                      <ChevronLeft className="h-4 w-4 mr-2" />
+                      <div className="flex flex-col items-start">
+                        <span className="text-xs text-muted-foreground">Previous</span>
+                        <span className="hidden sm:block font-medium">{prevExp.role}</span>
+                      </div>
                     </Button>
                   </Link>
-                ) : (
-                  <div />
                 )}
-                {nextExp ? (
+                {nextExp && (
                   <Link href={`/experience/${nextExp.slug}`}>
-                    <Button variant="outline" className="w-full h-auto py-3 flex-col items-end">
-                      <span className="text-xs text-muted-foreground mb-1 flex items-center">
-                        Next
-                        <ChevronRight className="h-3 w-3 ml-1" />
-                      </span>
-                      <span className="text-sm font-medium line-clamp-2 text-right">{nextExp.company}</span>
+                    <Button variant="outline" className="justify-end">
+                      <div className="flex flex-col items-end">
+                        <span className="text-xs text-muted-foreground">Next</span>
+                        <span className="hidden sm:block font-medium">{nextExp.role}</span>
+                      </div>
+                      <ChevronRight className="h-4 w-4 ml-2" />
                     </Button>
                   </Link>
-                ) : (
-                  <div />
                 )}
               </div>
-            </CardContent>
-          </Card>)}
+            </div>
+          )}
         </article>
       </PageLayout>
     </>

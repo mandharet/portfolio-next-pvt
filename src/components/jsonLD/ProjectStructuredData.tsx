@@ -1,35 +1,40 @@
-"use client";
+import { getSiteConfig } from "@/lib/config";
+import { ProjectMeta } from "@/types/project";
 
-import Script from "next/script";
-
-interface Project {
-  name: string;
-  description: string;
-  url: string;
-  technologies: string[];
-  remote?: boolean;
+interface ProjectStructuredDataProps {
+  project: ProjectMeta;
 }
 
-interface Props {
-  project: Project;
-}
-
-export default function ProjectStructuredData({ project }: Props) {
-  const jsonLd = {
+export default function ProjectStructuredData({ project }: ProjectStructuredDataProps) {
+  const siteConfig = getSiteConfig();
+  
+  const structuredData = {
     "@context": "https://schema.org",
-    "@type": "Project",
-    name: project.name,
+    "@type": "SoftwareSourceCode",
+    name: project.title,
     description: project.description,
-    url: project.url,
-    keywords: project.technologies.join(", ") + (project.remote ? ", Remote" : ""),
-    programmingLanguage: project.technologies,
+    dateCreated: project.date,
+    author: {
+      "@type": "Person",
+      name: siteConfig.name,
+      url: siteConfig.domain,
+    },
+    programmingLanguage: project.tech,
+    url: `${siteConfig.domain}/projects/${project.slug}`,
+    ...(project.github && {
+      codeRepository: project.github,
+    }),
+    ...(project.link && {
+      applicationCategory: "WebApplication",
+      applicationSubCategory: "DeveloperApplication",
+      url: project.link,
+    }),
   };
 
   return (
-    <Script
-      id={`project-jsonld-${project.name.replace(/\s+/g, "-")}`}
+    <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
     />
   );
 }

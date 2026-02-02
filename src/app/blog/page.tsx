@@ -14,7 +14,7 @@ export default function BlogPage() {
 
   return (
     <PageLayout>
-      <div className="space-y-8">
+      <div className="space-y-8 pb-30">
         <div>
           <h1 className="text-4xl font-bold mb-2">Blog</h1>
           <p className="text-muted-foreground">Technical articles and insights</p>

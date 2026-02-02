@@ -15,12 +15,12 @@ export default function ExperiencePage() {
 
   return (
     <PageLayout>
-      <div className="space-y-8">
+      <div className="space-y-8 pb-30">
         <h1 className="text-4xl font-bold">Experience</h1>
         
         <div className="space-y-6">
           {experiences.map((exp) => (
-            <Link key={exp.slug} href={`/experience/${exp.slug}`}>
+            <Link key={exp.slug} href={`/experience/${exp.slug}`} className="block">
               <Card className="hover:border-primary transition-colors">
                 <CardHeader>
                   <CardTitle>{exp.role}</CardTitle>

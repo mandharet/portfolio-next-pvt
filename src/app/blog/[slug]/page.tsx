@@ -1,12 +1,16 @@
 import { notFound } from "next/navigation";
 import { getPostBySlug, getAllPosts } from "@/lib/blog";
+import { getSiteConfig } from "@/lib/config";
 import PageLayout from "@/components/PageLayout";
 import { Badge } from "@/components/ui/shadcn/badge";
 import { Card, CardContent } from "@/components/ui/shadcn/card";
-import { Calendar, Clock } from "lucide-react";
+import { Calendar, Clock, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { CodeBlock } from "@/components/ui/aceternity/code-block";
+import { ScrollProgress } from "@/components/ui/aceternity/scroll-progress";
+import { Button } from "@/components/ui/shadcn/button";
+import BlogPostStructuredData from "@/components/jsonLD/BlogPostStructuredData";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -28,14 +32,40 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const result = getPostBySlug(slug);
   if (!result) return { title: "Post Not Found" };
 
+  const siteConfig = getSiteConfig();
+  const canonicalUrl = `${siteConfig.domain}/blog/${slug}`;
+
   return {
     title: result.post.title,
     description: result.post.description,
+    keywords: result.post.tags,
+    authors: [{ name: siteConfig.name }],
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title: result.post.title,
+      description: result.post.description,
+      type: "article",
+      url: canonicalUrl,
+      publishedTime: result.post.date,
+      authors: [siteConfig.name],
+      tags: result.post.tags,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: result.post.title,
+      description: result.post.description,
+    },
   };
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  
+  // Artificial delay to show loading state
+  await new Promise(resolve => setTimeout(resolve, 1500));
+  
   const result = getPostBySlug(slug);
 
   if (!result) {
@@ -43,10 +73,18 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   }
 
   const { post, content } = result;
+  const allPosts = getAllPosts();
+  const currentIndex = allPosts.findIndex((p) => p.slug === slug);
+  const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+  const nextPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+  const multiplePosts = allPosts.length > 1;
 
   return (
-    <PageLayout>
-      <article className="space-y-6 pb-20">
+    <>
+      <BlogPostStructuredData post={post} />
+      <ScrollProgress />
+      <PageLayout>
+        <article className="space-y-6 pb-20">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -67,7 +105,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
               <Calendar className="h-4 w-4" />
-              <time>{new Date(post.date).toLocaleDateString()}</time>
+              <time suppressHydrationWarning>{new Date(post.date).toLocaleDateString()}</time>
             </div>
             {post.readingTime && (
               <div className="flex items-center gap-2">
@@ -117,7 +155,37 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             </CardContent>
           </Card>
         )}
+
+        {multiplePosts && (
+          <div className="pt-6 border-t">
+            <div className="flex flex-wrap justify-between gap-3">
+              {prevPost && (
+                <Link href={`/blog/${prevPost.slug}`}>
+                  <Button variant="outline" className="justify-start">
+                    <ChevronLeft className="h-4 w-4 mr-2" />
+                    <div className="flex flex-col items-start">
+                      <span className="text-xs text-muted-foreground">Previous</span>
+                      <span className="hidden sm:block font-medium">{prevPost.title}</span>
+                    </div>
+                  </Button>
+                </Link>
+              )}
+              {nextPost && (
+                <Link href={`/blog/${nextPost.slug}`}>
+                  <Button variant="outline" className="justify-end">
+                    <div className="flex flex-col items-end">
+                      <span className="text-xs text-muted-foreground">Next</span>
+                      <span className="hidden sm:block font-medium">{nextPost.title}</span>
+                    </div>
+                    <ChevronRight className="h-4 w-4 ml-2" />
+                  </Button>
+                </Link>
+              )}
+            </div>
+          </div>
+        )}
       </article>
-    </PageLayout>
+      </PageLayout>
+    </>
   );
 }
