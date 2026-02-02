@@ -3,6 +3,8 @@ import { getAllPosts } from "@/lib/blog";
 import { getAllProjects } from "@/lib/project";
 import { getAllExperiences } from "@/lib/experience";
 
+export const dynamic = 'force-static';
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://tejas.mandhare.com";
   
