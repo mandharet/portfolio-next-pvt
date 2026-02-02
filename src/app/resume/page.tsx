@@ -14,9 +14,11 @@ export const metadata: Metadata = {
 
 export default function ResumePage() {
   return (
-    <div className="min-h-screen pt-16 pb-20 md:pb-8">
+    <div className="min-h-screen pt-26 pb-20 md:pb-8">
       <div className="max-w-5xl mx-auto px-4">
-        <h1 className="text-3xl font-bold mb-6">{personalConfig.resume.title}</h1>
+        <h1 className="text-4xl font-bold mb-6">
+          {personalConfig.resume.title}
+        </h1>
         <div className="w-full h-[calc(100vh-12rem)] border rounded-lg overflow-hidden">
           <iframe
             src={personalConfig.resume.url}

@@ -1,13 +1,20 @@
 import type { Metadata } from "next";
 import PageLayout from "@/components/PageLayout";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/shadcn/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/shadcn/card";
 import { Badge } from "@/components/ui/shadcn/badge";
 import { getAllExperiences } from "@/lib/experience";
 import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Experience",
-  description: "Professional experience building backend systems, APIs, and distributed services.",
+  description:
+    "Professional experience building backend systems, APIs, and distributed services.",
 };
 
 export default function ExperiencePage() {
@@ -15,12 +22,16 @@ export default function ExperiencePage() {
 
   return (
     <PageLayout>
-      <div className="space-y-8 pb-30">
+      <div className="space-y-8 pb-30 pt-10">
         <h1 className="text-4xl font-bold">Experience</h1>
-        
+
         <div className="space-y-6">
           {experiences.map((exp) => (
-            <Link key={exp.slug} href={`/experience/${exp.slug}`} className="block">
+            <Link
+              key={exp.slug}
+              href={`/experience/${exp.slug}`}
+              className="block"
+            >
               <Card className="hover:border-primary transition-colors">
                 <CardHeader>
                   <CardTitle>{exp.role}</CardTitle>
