@@ -3,9 +3,10 @@ import Navbar from "@/components/Navbar";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/shadcn/sonner";
-import { getSiteConfig } from "@/lib/config";
+import { getSiteConfig, getPersonalConfig } from "@/lib/config";
 
 const siteConfig = getSiteConfig();
+const personalConfig = getPersonalConfig();
 
 export const metadata: Metadata = {
   title: {
@@ -46,7 +47,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
+          <Navbar resumeEnabled={personalConfig.resume.enabled} />
           {children}
           <Toaster />
         </ThemeProvider>

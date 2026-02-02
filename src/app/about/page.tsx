@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import AboutContent from "@/components/pages/AboutContent";
-import { getAboutConfig, getPersonalConfig } from "@/lib/config";
+import { getAboutConfig, getPersonalConfig, getSiteConfig } from "@/lib/config";
+
+const siteConfig = getSiteConfig();
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Learn more about Tejas Mandhare - Software Engineer specializing in .NET, Go, and React.",
+  description: siteConfig.description,
   alternates: {
-    canonical: "https://tejas.mandhare.com/about",
+    canonical: `${siteConfig.domain}/about`,
   },
 };
 

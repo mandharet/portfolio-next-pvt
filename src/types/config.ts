@@ -8,6 +8,7 @@ export interface SiteConfig {
 }
 
 export interface PersonalConfig {
+  email: string;
   social: {
     github: string;
     linkedin: string;
@@ -16,6 +17,8 @@ export interface PersonalConfig {
   resume: {
     url: string;
     enabled: boolean;
+    title: string;
+    description: string;
   };
 }
 

@@ -76,8 +76,10 @@ Create `.mdx` files in `src/content/`:
 ```mdx
 ---
 title: "My First Post"
+description: "Brief description"
 date: "2024-01-20"
 tags: ["React", "Next.js"]
+readingTime: "5 min read" # Optional
 ---
 
 # Hello World!
@@ -88,12 +90,30 @@ Your content here...
 ```mdx
 ---
 title: "My Project"
+description: "Brief description"
+date: "2024-01-20"
 tech: ["React", "Node.js"]
 github: "https://github.com/you/project"
+link: "https://demo.com" # Optional
 ---
 
 # My Awesome Project
 Project details...
+```
+
+**Experience** (`src/content/experiences/my-job.mdx`):
+```mdx
+---
+company: "Company Name"
+role: "Software Engineer"
+period: "2023 - Present"
+description: "Brief description"
+technologies: ["React", "Node.js"]
+date: "2023-01-01"
+---
+
+# My Experience
+Details about your role...
 ```
 
 That's it! Your content appears automatically.

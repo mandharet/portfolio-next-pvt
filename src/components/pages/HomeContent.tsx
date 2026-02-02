@@ -17,7 +17,7 @@ export default function HomeContent({ config, personal }: HomeContentProps) {
     e.preventDefault();
     toast.success("Opening email app...");
     setTimeout(() => {
-      window.location.href = "mailto:dev.tejasm@gmail.com";
+      window.location.href = `mailto:${personal.email}`;
     }, 500);
   };
 
@@ -31,7 +31,7 @@ export default function HomeContent({ config, personal }: HomeContentProps) {
           <h2 className="text-2xl md:text-3xl text-muted-foreground">
             {config.hero.subtitle}
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl">
+          <p className="text-lg text-muted-foreground max-w-3xl">
             {config.hero.description}
           </p>
         </div>

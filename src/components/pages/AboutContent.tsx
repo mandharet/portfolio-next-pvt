@@ -18,7 +18,7 @@ export default function AboutContent({ config, personal }: AboutContentProps) {
     e.preventDefault();
     toast.success("Opening email app...");
     setTimeout(() => {
-      window.location.href = "mailto:dev.tejasm@gmail.com";
+      window.location.href = `mailto:${personal.email}`;
     }, 500);
   };
 

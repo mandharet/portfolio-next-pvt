@@ -8,7 +8,11 @@ import { Home, User, Briefcase, FolderOpen, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/shadcn/button";
 
-export default function Navbar() {
+interface NavbarProps {
+  resumeEnabled: boolean;
+}
+
+export default function Navbar({ resumeEnabled }: NavbarProps) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
@@ -24,7 +28,7 @@ export default function Navbar() {
     <>
       {/* Desktop Navbar */}
       <nav className="fixed top-0 w-full z-50 border-b bg-background/80 backdrop-blur-sm">
-        <div className="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
           <Link href="/" className="font-bold text-xl">
             TM
           </Link>
@@ -42,11 +46,13 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <Button asChild variant="outline" size="sm">
-              <Link href="/resume.pdf" target="_blank">
-                Resume
-              </Link>
-            </Button>
+            {resumeEnabled && (
+              <Button asChild variant="outline" size="sm">
+                <Link href="/resume">
+                  Resume
+                </Link>
+              </Button>
+            )}
             <ModeToggle />
           </div>
 

@@ -5,4 +5,6 @@ social:
 
 resume:
   url: "/resume.pdf"
-  enabled: true
+  enabled: false
+  title: "Resume"
+  description: "View my professional resume"

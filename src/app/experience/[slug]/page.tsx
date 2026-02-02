@@ -9,6 +9,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { CodeBlock } from "@/components/ui/aceternity/code-block";
 import { ScrollProgress } from "@/components/ui/aceternity/scroll-progress";
 import { Button } from "@/components/ui/shadcn/button";
+import ExperienceStructuredData from "@/components/jsonLD/ExperienceStructuredData";
 
 export async function generateStaticParams() {
   const experiences = getAllExperiences();
@@ -48,6 +49,7 @@ export default async function ExperienceDetailPage({ params }: { params: Promise
   const multipleExperiences= allExperiences.length > 1;
   return (
     <>
+      <ExperienceStructuredData experience={experience} />
       <ScrollProgress />
       <PageLayout>
         <article className="space-y-6 pb-20">
