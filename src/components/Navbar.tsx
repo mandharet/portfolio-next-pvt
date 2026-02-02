@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { cn } from "@/lib/utils";
+import { Briefcase, FileText, FolderOpen, Home, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ModeToggle } from "./Modetoggle";
-import { Home, User, Briefcase, FolderOpen, FileText } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { Button } from "./ui/shadcn/button";
 
 interface NavbarProps {
@@ -13,7 +12,6 @@ interface NavbarProps {
 }
 
 export default function Navbar({ resumeEnabled }: NavbarProps) {
-  const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
   const navLinks = [
