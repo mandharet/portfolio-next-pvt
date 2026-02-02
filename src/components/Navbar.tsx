@@ -1,15 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { cn } from "@/lib/utils";
+import { Briefcase, FileText, FolderOpen, Home, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ModeToggle } from "./Modetoggle";
-import { Home, User, Briefcase, FolderOpen, FileText } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { Button } from "./ui/shadcn/button";
 
-export default function Navbar() {
-  const [open, setOpen] = useState(false);
+interface NavbarProps {
+  resumeEnabled: boolean;
+}
+
+export default function Navbar({ resumeEnabled }: NavbarProps) {
   const pathname = usePathname();
 
   const navLinks = [
@@ -36,17 +38,17 @@ export default function Navbar() {
                 href={link.href}
                 className={cn(
                   "hover:text-primary transition-colors",
-                  pathname === link.href && "text-primary font-medium"
+                  pathname === link.href && "text-primary font-medium",
                 )}
               >
                 {link.label}
               </Link>
             ))}
-            <Button asChild variant="outline" size="sm">
-              <Link href="/resume.pdf" target="_blank">
-                Resume
-              </Link>
-            </Button>
+            {resumeEnabled && (
+              <Button asChild variant="outline" size="sm">
+                <Link href="/resume">Resume</Link>
+              </Button>
+            )}
             <ModeToggle />
           </div>
 
@@ -68,7 +70,9 @@ export default function Navbar() {
                 href={link.href}
                 className={cn(
                   "flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-colors",
-                  isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                  isActive
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground",
                 )}
               >
                 <Icon className="h-5 w-5" />

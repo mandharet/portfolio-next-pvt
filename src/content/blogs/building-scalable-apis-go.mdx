@@ -1,0 +1,111 @@
+---
+title: "Building Scalable APIs with Go"
+description: "Learn best practices for building high-performance, scalable APIs using Go and modern architecture patterns"
+date: "2024-01-25"
+tags: ["Go", "API", "Backend", "Microservices"]
+readingTime: "7 min read"
+---
+
+import { CodeBlock } from "@/components/ui/aceternity/code-block";
+
+# Building Scalable APIs with Go
+
+Go has become the language of choice for building high-performance APIs and microservices.
+
+## Why Go for APIs?
+
+Go provides several advantages:
+
+- **Fast Compilation**: Quick build times
+- **Concurrency**: Built-in goroutines
+- **Performance**: Near C-level performance
+- **Simple Syntax**: Easy to learn and maintain
+
+## Setting Up Your Project
+
+Create a new Go module:
+
+```bash
+go mod init myapi
+go get github.com/gin-gonic/gin
+```
+
+## Building Your First Endpoint
+
+<CodeBlock
+  language="go"
+  filename="main.go"
+  highlightLines={[8, 9, 10]}
+  code={`package main
+
+import (
+    "github.com/gin-gonic/gin"
+    "net/http"
+)
+
+func main() {
+r := gin.Default()
+
+    r.GET("/api/users", func(c *gin.Context) {
+        c.JSON(http.StatusOK, gin.H{
+            "users": []string{"Alice", "Bob"},
+        })
+    })
+
+    r.Run(":8080")
+
+}`}
+/>
+
+## Middleware
+
+Add authentication middleware:
+
+<CodeBlock
+  language="go"
+  filename="middleware.go"
+  code={`func AuthMiddleware() gin.HandlerFunc {
+    return func(c *gin.Context) {
+        token := c.GetHeader("Authorization")
+        if token == "" {
+            c.JSON(401, gin.H{"error": "unauthorized"})
+            c.Abort()
+            return
+        }
+        c.Next()
+    }
+}`}
+/>
+
+## Database Integration
+
+Connect to PostgreSQL:
+
+<CodeBlock
+  language="go"
+  filename="db.go"
+  code={`import (
+    "database/sql"
+    _ "github.com/lib/pq"
+)
+
+func ConnectDB() (\*sql.DB, error) {
+connStr := "postgres://user:pass@localhost/dbname"
+db, err := sql.Open("postgres", connStr)
+if err != nil {
+return nil, err
+}
+return db, nil
+}`}
+/>
+
+## Best Practices
+
+1. **Use Context**: Always pass context for cancellation
+2. **Error Handling**: Return errors, don't panic
+3. **Structured Logging**: Use structured logging libraries
+4. **Testing**: Write comprehensive tests
+
+## Conclusion
+
+Go is an excellent choice for building scalable APIs with its simplicity and performance.

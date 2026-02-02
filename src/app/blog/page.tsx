@@ -14,12 +14,14 @@ export default function BlogPage() {
 
   return (
     <PageLayout>
-      <div className="space-y-8">
+      <div className="space-y-8 pb-30 pt-10">
         <div>
           <h1 className="text-4xl font-bold mb-2">Blog</h1>
-          <p className="text-muted-foreground">Technical articles and insights</p>
+          <p className="text-muted-foreground">
+            Technical articles and insights
+          </p>
         </div>
-        
+
         {posts.length === 0 ? (
           <Card>
             <CardContent className="pt-6">

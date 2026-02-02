@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { Button } from "@/components/ui/shadcn/button";
-import { Home, ArrowLeft } from "lucide-react";
+import { ArrowLeft, Home } from "lucide-react";
+import Link from "next/link";
 
 export default function NotFound() {
   return (
@@ -11,7 +11,7 @@ export default function NotFound() {
         <h1 className="text-9xl font-bold text-primary">404</h1>
         <h2 className="text-3xl font-semibold">Page Not Found</h2>
         <p className="text-muted-foreground max-w-md mx-auto">
-          The page you're looking for doesn't exist or has been moved.
+          The page you&apos;re looking for doesn&apos;t exist or has been moved.
         </p>
         <div className="flex gap-4 justify-center pt-4">
           <Button asChild size="lg">
@@ -20,7 +20,11 @@ export default function NotFound() {
               Go Home
             </Link>
           </Button>
-          <Button variant="outline" size="lg" onClick={() => window.history.back()}>
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={() => window.history.back()}
+          >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Go Back
           </Button>

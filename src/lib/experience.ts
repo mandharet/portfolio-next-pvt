@@ -12,7 +12,10 @@ export interface ExperienceMeta {
   date: string;
 }
 
-const experiencesDirectory = path.join(process.cwd(), "src/content/experiences");
+const experiencesDirectory = path.join(
+  process.cwd(),
+  "src/content/experiences",
+);
 
 export function getAllExperiences(): ExperienceMeta[] {
   const fileNames = fs.readdirSync(experiencesDirectory);

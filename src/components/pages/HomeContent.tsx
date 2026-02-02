@@ -17,7 +17,7 @@ export default function HomeContent({ config, personal }: HomeContentProps) {
     e.preventDefault();
     toast.success("Opening email app...");
     setTimeout(() => {
-      window.location.href = "mailto:dev.tejasm@gmail.com";
+      window.location.href = `mailto:${personal.email}`;
     }, 500);
   };
 
@@ -31,11 +31,11 @@ export default function HomeContent({ config, personal }: HomeContentProps) {
           <h2 className="text-2xl md:text-3xl text-muted-foreground">
             {config.hero.subtitle}
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl">
+          <p className="text-lg text-muted-foreground max-w-3xl">
             {config.hero.description}
           </p>
         </div>
-        
+
         <div className="flex flex-wrap gap-4">
           <Button asChild size="lg">
             <Link href={config.cta.primary.link}>
@@ -43,7 +43,9 @@ export default function HomeContent({ config, personal }: HomeContentProps) {
             </Link>
           </Button>
           <Button asChild variant="outline" size="lg">
-            <Link href={config.cta.secondary.link}>{config.cta.secondary.text}</Link>
+            <Link href={config.cta.secondary.link}>
+              {config.cta.secondary.text}
+            </Link>
           </Button>
           {personal.resume.enabled && (
             <Button asChild variant="outline" size="lg">
@@ -56,16 +58,29 @@ export default function HomeContent({ config, personal }: HomeContentProps) {
 
         <div className="flex gap-4">
           <Button asChild variant="ghost" size="icon">
-            <Link href={personal.social.github} target="_blank" aria-label="GitHub">
+            <Link
+              href={personal.social.github}
+              target="_blank"
+              aria-label="GitHub"
+            >
               <Github className="h-5 w-5" />
             </Link>
           </Button>
           <Button asChild variant="ghost" size="icon">
-            <Link href={personal.social.linkedin} target="_blank" aria-label="LinkedIn">
+            <Link
+              href={personal.social.linkedin}
+              target="_blank"
+              aria-label="LinkedIn"
+            >
               <Linkedin className="h-5 w-5" />
             </Link>
           </Button>
-          <Button variant="ghost" size="icon" onClick={handleEmailClick} aria-label="Email">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleEmailClick}
+            aria-label="Email"
+          >
             <Mail className="h-5 w-5" />
           </Button>
         </div>

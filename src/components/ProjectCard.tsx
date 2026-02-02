@@ -36,8 +36,10 @@ export default function ProjectCard({ project }: { project: Project }) {
         )}
 
         <h3 className="font-semibold text-lg mb-2 pr-12">{project.title}</h3>
-        <p className="text-muted-foreground mb-4 flex-1">{project.description}</p>
-        
+        <p className="text-muted-foreground mb-4 flex-1">
+          {project.description}
+        </p>
+
         <div className="flex flex-wrap gap-2 mb-4">
           {project.tech.map((tech) => (
             <Badge key={tech} variant="secondary" className="text-xs">

@@ -1,56 +1,39 @@
-# 🚀 Modern Portfolio Website
+# 🚀 Portfolio - Next.js
 
-A beautiful, SEO-optimized portfolio website built with Next.js 15, TypeScript, and Tailwind CSS. Features a blog, project showcase, experience timeline, and easy YAML-based content management.
+> **Open Source Portfolio Template** - Clone it, customize it, make it yours!
 
-![Next.js](https://img.shields.io/badge/Next.js)
+A modern, SEO-optimized portfolio website built with Next.js 15, TypeScript, and Tailwind CSS. Perfect for developers, designers, and creators who want a professional online presence.
+
+![Next.js](https://img.shields.io/badge/Next.js-15-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-## ✨ Features
+---
 
-- 🎨 **Modern Design** - Clean, professional UI with dark/light mode
-- 📱 **Fully Responsive** - Mobile-first design with bottom navigation
-- 🔍 **SEO Optimized** - Meta tags, Open Graph, sitemap, structured data
-- 📝 **Blog System** - Write posts in MDX with syntax highlighting
-- 💼 **Project Showcase** - Detailed project pages with code examples
-- 🏢 **Experience Timeline** - Professional experience with rich content
-- ⚙️ **YAML Configuration** - Easy content management without code changes
+## ✨ Why This Template?
+
+- 🎨 **Beautiful Design** - Modern UI with dark/light mode
+- ⚙️ **YAML Configuration** - Update your info without touching code
+- 📝 **MDX Blog** - Write posts in Markdown with React components
+- 🔍 **SEO Ready** - Sitemap, metadata, structured data included
+- 📱 **Mobile First** - Fully responsive on all devices
+- 🚀 **Fast** - Static generation, optimized performance
 - 🎯 **Type Safe** - Full TypeScript support
-- ⚡ **Fast Performance** - Optimized builds and static generation
 
-## 🎯 Quick Start
+---
 
-### Prerequisites
+## 🎉 Get Started in 3 Steps
 
-- Node.js 18+ installed
-- npm or yarn package manager
+### 1. Clone & Install
 
-### Installation
-
-1. **Clone the repository**
 ```bash
 git clone https://github.com/yourusername/portfolio-next.git
 cd portfolio-next
+bun install
 ```
 
-2. **Install dependencies**
-```bash
-npm install
-```
-
-3. **Run development server**
-```bash
-npm run dev
-```
-
-4. **Open your browser**
-```
-http://localhost:3000
-```
-
-## 📝 Customization Guide
-
-### Step 1: Update Site Configuration
+### 2. Update Your Info
 
 Edit `src/config/site.yaml`:
 
@@ -58,335 +41,201 @@ Edit `src/config/site.yaml`:
 name: "Your Name"
 title: "Your Title"
 domain: "https://yoursite.com"
-email: "your.email@example.com"
+email: "your@email.com"
 description: "Your description"
-keywords:
-  - "Your Keyword 1"
-  - "Your Keyword 2"
+keywords: ["Your", "Keywords"]
 ```
 
-### Step 2: Update Personal Information
+### 3. Run & Deploy
 
-Edit `src/config/personal.yaml`:
-
-```yaml
-social:
-  github: "https://github.com/yourusername"
-  linkedin: "https://linkedin.com/in/yourusername"
-  twitter: "https://twitter.com/yourusername"  # Optional
-
-resume:
-  url: "/resume.pdf"
-  enabled: true  # Set to false to hide resume button
+```bash
+bun run dev      # Preview locally
+bun run build    # Build for production
 ```
 
-### Step 3: Customize Homepage
+Deploy to [Vercel](https://vercel.com) or [Netlify](https://netlify.com) in one click!
 
-Edit `src/config/home.yaml`:
+---
 
-```yaml
-hero:
-  title: "Your Name"
-  subtitle: "Your Professional Title"
-  description: "Brief description about yourself and what you do."
+## 📝 Easy Customization
 
-cta:
-  primary:
-    text: "View Projects"
-    link: "/projects"
-  secondary:
-    text: "About Me"
-    link: "/about"
-  resume:
-    text: "Resume"
-    link: "/resume.pdf"
-```
+### YAML Configuration (No Code!)
 
-### Step 4: Update About Page
+All your information is in simple YAML files:
 
-Edit `src/config/about.yaml`:
+- `src/config/site.yaml` - Name, title, SEO settings
+- `src/config/personal.yaml` - Social links, resume
+- `src/config/home.yaml` - Homepage content
+- `src/config/about.yaml` - About page, skills
 
-```yaml
-bio:
-  - "First paragraph about yourself..."
-  - "Second paragraph..."
+### Add Content in Markdown
 
-skills:
-  - name: "Backend"
-    items:
-      - "Node.js"
-      - "Python"
-      - "Go"
-  - name: "Frontend"
-    items:
-      - "React"
-      - "Vue.js"
+Create `.mdx` files in `src/content/`:
 
-interests:
-  - "Machine Learning"
-  - "Open Source"
-```
-
-### Step 5: Add Your Resume
-
-Place your resume PDF in the `public` folder:
-```
-public/resume.pdf
-```
-
-### Step 6: Update Favicon
-
-Replace `src/app/favicon.ico` with your own favicon.
-
-## 📚 Adding Content
-
-### Adding Blog Posts
-
-1. Create a new `.mdx` file in `src/content/blogs/`:
+**Blog Post** (`src/content/blogs/my-post.mdx`):
 
 ```mdx
 ---
-title: "Your Blog Post Title"
+title: "My First Post"
 description: "Brief description"
 date: "2024-01-20"
 tags: ["React", "Next.js"]
-readingTime: "5 min read"
+readingTime: "5 min read" # Optional
 ---
 
-# Your Blog Post Title
+# Hello World!
 
 Your content here...
-
-## Code Example
-
-<CodeBlock
-  language="javascript"
-  filename="example.js"
-  code={`console.log("Hello World!");`}
-/>
 ```
 
-2. The blog post will automatically appear on `/blog`
-
-### Adding Projects
-
-1. Create a new `.mdx` file in `src/content/projects/`:
+**Project** (`src/content/projects/my-project.mdx`):
 
 ```mdx
 ---
-title: "Project Name"
-description: "Project description"
-date: "2024-01-15"
-tech: ["React", "Node.js", "MongoDB"]
-link: "https://project-demo.com"  # Optional
-github: "https://github.com/you/project"  # Optional
-paper: "https://paper-link.com"  # Optional
+title: "My Project"
+description: "Brief description"
+date: "2024-01-20"
+tech: ["React", "Node.js"]
+github: "https://github.com/you/project"
+link: "https://demo.com" # Optional
 ---
 
-# Project Name
+# My Awesome Project
 
-Detailed project description...
+Project details...
 ```
 
-2. The project will automatically appear on `/projects`
-
-### Adding Experience
-
-1. Create a new `.mdx` file in `src/content/experiences/`:
+**Experience** (`src/content/experiences/my-job.mdx`):
 
 ```mdx
 ---
 company: "Company Name"
-role: "Your Role"
+role: "Software Engineer"
 period: "2023 - Present"
 description: "Brief description"
-technologies: ["Tech1", "Tech2"]
+technologies: ["React", "Node.js"]
 date: "2023-01-01"
 ---
 
-# Your Role at Company Name
+# My Experience
 
-Detailed experience description...
+Details about your role...
 ```
 
-2. The experience will automatically appear on `/experience`
+That's it! Your content appears automatically.
 
-## 🎨 Customizing Styles
+---
 
-### Colors
+## 🎨 What You Get
 
-Edit `src/app/globals.css` to change theme colors:
+- ✅ Homepage with hero section
+- ✅ About page with skills & bio
+- ✅ Blog with MDX support
+- ✅ Project showcase
+- ✅ Experience timeline
+- ✅ Dark/Light mode toggle
+- ✅ Mobile-friendly navigation
+- ✅ SEO optimized (sitemap, metadata, structured data)
+- ✅ Fast loading (static generation)
 
-```css
-:root {
-  --primary: oklch(0.205 0 0);  /* Change primary color */
-  --background: oklch(1 0 0);   /* Change background */
-}
-```
+---
 
-### Fonts
+## 🚀 Deploy Your Portfolio
 
-Update fonts in `src/app/layout.tsx` or use Tailwind's font utilities.
-
-## 🔧 Configuration Files Reference
-
-### `src/config/site.yaml`
-Global site settings, SEO metadata
-
-### `src/config/personal.yaml`
-Social links, resume settings
-
-### `src/config/home.yaml`
-Homepage hero section and CTAs
-
-### `src/config/about.yaml`
-About page bio, skills, interests
-
-### `src/config/navigation.yaml`
-Navigation menu items
-
-## 📦 Project Structure
-
-```
-portfolio-next/
-├── src/
-│   ├── app/                    # Next.js pages
-│   │   ├── about/
-│   │   ├── blog/
-│   │   ├── experience/
-│   │   ├── projects/
-│   │   └── page.tsx           # Homepage
-│   ├── components/
-│   │   ├── pages/             # Page-specific components
-│   │   ├── ui/                # Reusable UI components
-│   │   └── ...
-│   ├── config/                # YAML configuration files
-│   ├── content/               # MDX content
-│   │   ├── blogs/
-│   │   ├── experiences/
-│   │   └── projects/
-│   ├── lib/                   # Utilities
-│   └── types/                 # TypeScript types
-├── public/                    # Static files
-└── package.json
-```
-
-## 🚀 Deployment
-
-### Deploy to Vercel (Recommended)
+### Vercel (Recommended)
 
 1. Push your code to GitHub
 2. Go to [vercel.com](https://vercel.com)
 3. Import your repository
-4. Deploy!
+4. Click Deploy - Done! 🎉
 
-### Deploy to Netlify
+### Netlify
 
 1. Push your code to GitHub
 2. Go to [netlify.com](https://netlify.com)
 3. Import your repository
-4. Build command: `npm run build`
-5. Publish directory: `.next`
-6. Deploy!
-
-### Build for Production
-
-```bash
-npm run build
-npm run start
-```
-
-## 🔍 SEO Configuration
-
-The site is pre-configured with:
-- ✅ Meta tags (title, description, keywords)
-- ✅ Open Graph tags (Facebook, LinkedIn)
-- ✅ Twitter Cards
-- ✅ Dynamic sitemap (`/sitemap.xml`)
-- ✅ Robots.txt (`/robots.txt`)
-- ✅ Structured data (JSON-LD)
-- ✅ Canonical URLs
-
-Update the domain in:
-- `src/config/site.yaml`
-- `src/app/robots.ts`
-- `src/app/sitemap.ts`
-
-## 🎯 Available Scripts
-
-```bash
-npm run dev      # Start development server
-npm run build    # Build for production
-npm run start    # Start production server
-npm run lint     # Run ESLint
-```
-
-## 🛠️ Tech Stack
-
-- **Framework**: Next.js 15 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS 4
-- **UI Components**: shadcn/ui
-- **Content**: MDX (Markdown + JSX)
-- **Configuration**: YAML
-- **Icons**: Lucide React
-- **Syntax Highlighting**: react-syntax-highlighter
-- **Theme**: next-themes
-
-## 📄 License
-
-MIT License - feel free to use this template for your own portfolio!
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to open issues or submit pull requests.
-
-## 💡 Tips
-
-1. **Keep it updated** - Regularly add new projects and blog posts
-2. **Optimize images** - Use WebP format and proper sizing
-3. **Write good content** - Quality over quantity
-4. **Test on mobile** - Most visitors will be on mobile devices
-5. **Update resume** - Keep your resume current
-
-## 🆘 Troubleshooting
-
-### Build fails
-```bash
-# Clear cache and reinstall
-rm -rf .next node_modules
-npm install
-npm run build
-```
-
-### Styles not loading
-```bash
-# Rebuild Tailwind
-npm run dev
-```
-
-### MDX not rendering
-- Check frontmatter format (must be valid YAML)
-- Ensure file extension is `.mdx`
-- Verify file is in correct content folder
-
-## 📞 Support
-
-If you have questions or need help:
-1. Check existing issues on GitHub
-2. Create a new issue with details
-3. Provide error messages and screenshots
-
-## 🌟 Show Your Support
-
-If you found this template helpful, please:
-- ⭐ Star the repository
-- 🐛 Report bugs
-- 💡 Suggest features
-- 🔀 Fork and customize
+4. Build: `bun run build` | Publish: `out`
+5. Deploy - Done! 🎉
 
 ---
 
-**Built with ❤️ using Next.js**
+## 📚 Documentation
 
-Happy coding! 🚀
+- **[docs/README.md](./docs/README.md)** - Quick overview
+- **[docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)** - Technical details
+
+---
+
+## 🛠️ Tech Stack
+
+- **Next.js 15** - React framework with App Router
+- **TypeScript** - Type safety
+- **Tailwind CSS 4** - Styling
+- **MDX** - Markdown with React components
+- **YAML** - Configuration files
+- **shadcn/ui** - UI components
+
+---
+
+## 📄 License
+
+**MIT License** - Free to use for personal and commercial projects!
+
+Feel free to:
+
+- ✅ Use for your portfolio
+- ✅ Modify as you like
+- ✅ Deploy anywhere
+- ✅ Remove attribution (optional, but appreciated!)
+
+---
+
+## 🤝 Contributing
+
+Found a bug? Have a feature idea? Contributions are welcome!
+
+1. Fork the repository
+2. Create your feature branch
+3. Submit a pull request
+
+---
+
+## 💡 Tips
+
+- Update `domain` in `src/config/site.yaml` for proper SEO
+- Add your resume PDF to `public/resume.pdf`
+- Customize colors in `src/app/globals.css`
+- Write regularly - fresh content helps SEO!
+
+---
+
+## 🌟 Show Your Support
+
+If you find this template helpful:
+
+- ⭐ Star this repository
+- 🐛 Report bugs
+- 💡 Suggest features
+- 🔀 Share with others
+
+---
+
+## 📞 Need Help?
+
+- Check [docs/](./docs/) for documentation
+- Open an [issue](https://github.com/yourusername/portfolio-next/issues)
+- Join discussions
+
+---
+
+<div align="center">
+
+**Built with ❤️ for the open source community**
+
+[Demo](https://your-demo.vercel.app) • [Documentation](./docs/) • [Issues](https://github.com/yourusername/portfolio-next/issues)
+
+</div>
+
+---
+
+**Ready to build your portfolio?** Clone this repo and make it yours! 🚀

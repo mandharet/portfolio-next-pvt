@@ -18,13 +18,13 @@ export default function AboutContent({ config, personal }: AboutContentProps) {
     e.preventDefault();
     toast.success("Opening email app...");
     setTimeout(() => {
-      window.location.href = "mailto:dev.tejasm@gmail.com";
+      window.location.href = `mailto:${personal.email}`;
     }, 500);
   };
 
   return (
     <PageLayout>
-      <div className="space-y-8 py-8">
+      <div className="space-y-8 pb-30 pt-10">
         <div>
           <h1 className="text-4xl font-bold mb-4">About Me</h1>
           <div className="flex flex-wrap gap-3">

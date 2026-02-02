@@ -35,7 +35,9 @@ export function getAllPosts(): BlogPost[] {
   return allPosts.sort((a, b) => (a.date > b.date ? -1 : 1));
 }
 
-export function getPostBySlug(slug: string): { post: BlogPost; content: string } | null {
+export function getPostBySlug(
+  slug: string,
+): { post: BlogPost; content: string } | null {
   try {
     const fullPath = path.join(postsDirectory, `${slug}.mdx`);
     const fileContents = fs.readFileSync(fullPath, "utf8");
