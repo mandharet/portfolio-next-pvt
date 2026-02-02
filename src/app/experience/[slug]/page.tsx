@@ -86,7 +86,7 @@ export default async function ExperienceDetailPage({
         </div>
       </div>
       <PageLayout>
-        <article className="space-y-6 pb-20">
+        <article className="space-y-6 pb-50">
           <div className="space-y-4">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Calendar className="h-4 w-4" />

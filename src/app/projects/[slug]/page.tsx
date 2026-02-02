@@ -116,7 +116,7 @@ export default async function ProjectDetailPage({
         </div>
       </div>
       <PageLayout>
-        <article className="space-y-6 pb-20">
+        <article className="space-y-6 pb-50">
           <div className="space-y-4">
             <h1 className="text-4xl md:text-5xl font-bold">{project.title}</h1>
             <p className="text-xl text-muted-foreground">

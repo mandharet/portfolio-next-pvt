@@ -110,7 +110,7 @@ export default async function BlogPostPage({
       </div>
 
       <PageLayout>
-        <article className="space-y-6 pb-20">
+        <article className="space-y-6 pb-50">
           <div className="space-y-4">
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
