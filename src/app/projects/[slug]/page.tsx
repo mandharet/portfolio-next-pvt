@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import { getProjectBySlug, getAllProjects } from "@/lib/project";
 import { getSiteConfig } from "@/lib/config";
-import PageLayout from "@/components/PageLayout";
+import { StickyBreadcrumb } from "@/components/ui/wrapper/sticky-breadcrumb";
+import { ArticleContainer } from "@/components/ui/wrapper/article-container";
 import { Badge } from "@/components/ui/shadcn/badge";
 import { Card, CardContent } from "@/components/ui/shadcn/card";
 import {
@@ -100,23 +101,14 @@ export default async function ProjectDetailPage({
     <>
       <ProjectStructuredData project={project} />
       <ScrollProgress />
-      <div className="sticky top-15 z-40 bg-background/95 backdrop-blur-sm py-4 border-b mb-10">
-        <div className="max-w-5xl mx-auto px-4">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/projects">Projects</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>{project.title}</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
-      </div>
-      <PageLayout>
-        <article className="space-y-6 pb-50">
+      <StickyBreadcrumb
+        items={[
+          { label: "Projects", href: "/projects" },
+          { label: project.title },
+        ]}
+      />
+
+      <ArticleContainer>
           <div className="space-y-4">
             <h1 className="text-4xl md:text-5xl font-bold">{project.title}</h1>
             <p className="text-xl text-muted-foreground">
@@ -198,8 +190,7 @@ export default async function ProjectDetailPage({
               </div>
             </div>
           )}
-        </article>
-      </PageLayout>
+      </ArticleContainer>
     </>
   );
 }

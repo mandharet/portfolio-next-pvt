@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getExperienceBySlug, getAllExperiences } from "@/lib/experience";
-import PageLayout from "@/components/PageLayout";
+import { StickyBreadcrumb } from "@/components/ui/wrapper/sticky-breadcrumb";
+import { ArticleContainer } from "@/components/ui/wrapper/article-container";
 import { Badge } from "@/components/ui/shadcn/badge";
 import { Card, CardContent } from "@/components/ui/shadcn/card";
 import { ChevronLeft, ChevronRight, Calendar } from "lucide-react";
@@ -70,23 +71,14 @@ export default async function ExperienceDetailPage({
     <>
       <ExperienceStructuredData experience={experience} />
       <ScrollProgress />
-      <div className="sticky top-15 z-40 bg-background/95 backdrop-blur-sm py-4 border-b mb-10">
-        <div className="max-w-5xl mx-auto px-4">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/experience">Experience</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>{experience.role}</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
-      </div>
-      <PageLayout>
-        <article className="space-y-6 pb-50">
+      <StickyBreadcrumb
+        items={[
+          { label: "Experience", href: "/experience" },
+          { label: experience.role },
+        ]}
+      />
+
+      <ArticleContainer>
           <div className="space-y-4">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Calendar className="h-4 w-4" />
@@ -149,8 +141,7 @@ export default async function ExperienceDetailPage({
               </div>
             </div>
           )}
-        </article>
-      </PageLayout>
+      </ArticleContainer>
     </>
   );
 }

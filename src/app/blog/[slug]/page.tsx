@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import { getPostBySlug, getAllPosts } from "@/lib/blog";
 import { getSiteConfig } from "@/lib/config";
-import PageLayout from "@/components/PageLayout";
+import { StickyBreadcrumb } from "@/components/ui/wrapper/sticky-breadcrumb";
+import { ArticleContainer } from "@/components/ui/wrapper/article-container";
 import { Badge } from "@/components/ui/shadcn/badge";
 import { Card, CardContent } from "@/components/ui/shadcn/card";
 import { Calendar, Clock, ChevronLeft, ChevronRight } from "lucide-react";
@@ -93,24 +94,14 @@ export default async function BlogPostPage({
       <BlogPostStructuredData post={post} />
       <ScrollProgress />
 
-      <div className="sticky top-15 z-40 bg-background/95 backdrop-blur-sm py-4 border-b mb-10">
-        <div className="max-w-5xl mx-auto px-4">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/blog">Blog</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>{post.title}</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
-      </div>
+      <StickyBreadcrumb
+        items={[
+          { label: "Blog", href: "/blog" },
+          { label: post.title },
+        ]}
+      />
 
-      <PageLayout>
-        <article className="space-y-6 pb-50">
+      <ArticleContainer>
           <div className="space-y-4">
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
@@ -204,8 +195,7 @@ export default async function BlogPostPage({
               </div>
             </div>
           )}
-        </article>
-      </PageLayout>
+      </ArticleContainer>
     </>
   );
 }

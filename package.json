@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
     "format": "npx prettier --write \"**/*.{ts,tsx,css,md,mdx}\""
   },
   "dependencies": {
