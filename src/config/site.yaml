@@ -1,12 +1,24 @@
 name: "Tejas Mandhare"
-title: "Software Engineer"
+title: "Backend-Heavy Software Engineer"
 domain: "https://tejas.mandhare.com"
 email: "dev.tejasm@gmail.com"
-description: "Software Engineer specializing in .NET, Go, React, APIs, and scalable system design"
+location: "Mumbai, India"
+description: "Backend-heavy Software Engineer with 3+ years of experience building scalable, fault-tolerant, and production-grade distributed systems. Strong expertise in C#/.NET, cloud-native architectures, and real-time systems."
 keywords:
   - "Software Engineer"
-  - "Full-Stack Developer"
+  - "Backend Engineer"
   - ".NET Developer"
-  - "Go Developer"
-  - "React Developer"
-  - "System Design"
+  - "C# Developer"
+  - "Distributed Systems"
+  - "Cloud Architecture"
+  - "Azure"
+  - "Microservices"
+
+social:
+  github: "https://github.com/mandharet"
+  linkedin: "https://www.linkedin.com/in/tejasmandhare/"
+  twitter: "https://twitter.com/yourusername"
+
+resume:
+  url: "/resume.pdf"
+  enabled: true

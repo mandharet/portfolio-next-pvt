@@ -1,28 +1,33 @@
 bio:
-  - "I'm a Software Engineer passionate about building scalable backend systems, APIs, and developer tools. With expertise in .NET, Go, and React, I focus on creating efficient and maintainable solutions."
-  - "My approach combines technical excellence with a builder mindset, always looking for ways to improve systems and deliver value."
+  - "Backend-heavy Software Engineer with 3+ years of experience building scalable, fault-tolerant, and production-grade distributed systems. Strong expertise in C#/.NET, cloud-native architectures, and real-time systems."
+  - "Proven ability to own backend services end-to-end — from design and optimization to deployment, observability, and on-call production support — in remote-first, asynchronous environments."
 
 skills:
-  - name: "Backend"
+  - name: "Backend & Architecture"
     items:
-      - ".NET & C#"
-      - "Go"
-      - "Node.js"
-  - name: "Frontend"
+      - "C#, .NET 6/8, ASP.NET Core"
+      - "REST APIs, GraphQL"
+      - "CQRS, Mediator Pattern"
+      - "Distributed Systems"
+  - name: "Cloud & Databases"
     items:
-      - "React & Next.js"
-      - "TypeScript"
+      - "Azure (Functions, SQL, Redis)"
+      - "AWS"
+      - "SQL Server, PostgreSQL"
+      - "MongoDB, ElasticSearch"
+  - name: "Frontend & Real-Time"
+    items:
+      - "React, TypeScript, Redux"
+      - "WebSockets, SignalR"
       - "Tailwind CSS"
-  - name: "Tools & Infrastructure"
+  - name: "DevOps & Observability"
     items:
-      - "Docker"
-      - "PostgreSQL"
-      - "Redis"
-      - "System Design"
-      - "API Development"
+      - "Docker, GitHub Actions, Jenkins"
+      - "Splunk, New Relic"
+      - "Distributed Tracing"
 
 interests:
-  - "Distributed Systems"
+  - "Distributed Systems Architecture"
   - "Performance Optimization"
-  - "Developer Tools"
-  - "Open Source"
+  - "Cloud-Native Development"
+  - "System Observability"

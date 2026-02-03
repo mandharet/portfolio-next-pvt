@@ -1,7 +1,7 @@
-import type { Metadata } from "next";
 import PageLayout from "@/components/PageLayout";
-import { getAllProjects } from "@/lib/project";
 import ProjectCard from "@/components/ProjectCard";
+import { getAllProjects } from "@/lib/project";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -15,7 +15,7 @@ export default function ProjectsPage() {
   return (
     <PageLayout>
       <div className="space-y-8 pb-30 pt-10">
-        <h1 className="text-4xl font-bold">Projects</h1>
+        <h1 className="text-4xl font-bold">Projects (Demo)</h1>
 
         <div className="grid md:grid-cols-2 gap-6">
           {projects.map((project) => (
