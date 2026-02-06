@@ -46,6 +46,12 @@ description: "Your description"
 keywords: ["Your", "Keywords"]
 ```
 
+Edit `src/config/personal.yaml`, `src/config/home.yaml`, and `src/config/about.yaml` with your information.
+
+**Note:** After updating YAML files, also update:
+- `src/app/opengraph-image.tsx` (lines 4, 27, 35, 43) - for social media previews
+- `public/og-image.svg` (optional fallback)
+
 ### 3. Run & Deploy
 
 ```bash
