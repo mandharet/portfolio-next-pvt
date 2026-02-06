@@ -1,7 +1,7 @@
 hero:
   title: "Tejas Mandhare"
   subtitle: "Software Engineer"
-  description: "Building scalable backend systems, APIs, and developer tools using .NET, Go, and React."
+  description: "Building scalable, fault-tolerant, and production-grade distributed systems with 4+ years of experience in C#/.NET, cloud-native architectures, and real-time systems."
 
 cta:
   primary:

@@ -64,9 +64,6 @@ export default async function BlogPostPage({
 }) {
   const { slug } = await params;
 
-  // Artificial delay to show loading state
-  await new Promise((resolve) => setTimeout(resolve, 1500));
-
   const result = getPostBySlug(slug);
 
   if (!result) {

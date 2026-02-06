@@ -1,8 +1,13 @@
 "use client";
 import React from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import dynamic from "next/dynamic";
 import { IconCheck, IconCopy } from "@tabler/icons-react";
+import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
+
+const SyntaxHighlighter = dynamic(
+  () => import("react-syntax-highlighter").then((mod) => mod.Prism),
+  { ssr: false }
+);
 
 type CodeBlockProps = {
   language: string;
