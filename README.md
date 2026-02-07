@@ -16,6 +16,8 @@ A modern, SEO-optimized portfolio website built with Next.js 15, TypeScript, and
 - 🎨 **Beautiful Design** - Modern UI with dark/light mode
 - ⚙️ **YAML Configuration** - Update your info without touching code
 - 📝 **MDX Blog** - Write posts in Markdown with React components
+- 📊 **Mermaid Diagrams** - Visualize architecture and workflows
+- 📋 **Markdown Tables** - Display data in responsive tables
 - 🔍 **SEO Ready** - Sitemap, metadata, structured data included
 - 📱 **Mobile First** - Fully responsive on all devices
 - 🚀 **Fast** - Static generation, optimized performance
@@ -102,13 +104,30 @@ title: "My Project"
 description: "Brief description"
 date: "2024-01-20"
 tech: ["React", "Node.js"]
-github: "https://github.com/you/project"
-link: "https://demo.com" # Optional
+github: ["https://github.com/you/project"] # Supports multiple URLs
+link: ["https://demo.com"] # Optional, supports multiple
+papers: ["https://paper-url"] # Optional, for research papers
+image: "/projects/my-project.jpg" # Optional
 ---
 
 # My Awesome Project
 
 Project details...
+
+## Architecture
+
+```mermaid
+graph LR
+    A[Frontend] --> B[API]
+    B --> C[Database]
+```
+
+## Tech Stack
+
+| Category | Technologies |
+|----------|-------------|
+| Frontend | React, Next.js |
+| Backend  | Node.js, Express |
 ```
 
 **Experience** (`src/content/experiences/my-job.mdx`):
@@ -137,8 +156,11 @@ That's it! Your content appears automatically.
 - ✅ Homepage with hero section
 - ✅ About page with skills & bio
 - ✅ Blog with MDX support
-- ✅ Project showcase
+- ✅ Project showcase with image cards
 - ✅ Experience timeline
+- ✅ Mermaid diagram support
+- ✅ Markdown table support
+- ✅ Multiple URLs per project (GitHub, demo, papers)
 - ✅ Dark/Light mode toggle
 - ✅ Mobile-friendly navigation
 - ✅ SEO optimized (sitemap, metadata, structured data)
@@ -178,6 +200,8 @@ That's it! Your content appears automatically.
 - **TypeScript** - Type safety
 - **Tailwind CSS 4** - Styling
 - **MDX** - Markdown with React components
+- **Mermaid** - Diagram and flowchart support
+- **remark-gfm** - GitHub Flavored Markdown (tables, etc.)
 - **YAML** - Configuration files
 - **shadcn/ui** - UI components
 
@@ -210,8 +234,12 @@ Found a bug? Have a feature idea? Contributions are welcome!
 
 - Update `domain` in `src/config/site.yaml` for proper SEO
 - Add your resume PDF to `public/resume.pdf`
+- Add project images to `public/projects/` for card thumbnails
+- Use mermaid diagrams to visualize architecture
+- Use markdown tables for tech stacks and comparisons
 - Customize colors in `src/app/globals.css`
 - Write regularly - fresh content helps SEO!
+- Check `projectPrompt.txt` for portfolio entry template
 
 ---
 

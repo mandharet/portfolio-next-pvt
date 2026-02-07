@@ -18,6 +18,9 @@ export function getAllProjects(): ProjectMeta[] {
       return {
         slug,
         ...(data as Omit<ProjectMeta, "slug">),
+        github: Array.isArray(data.github) ? data.github : data.github ? [data.github] : undefined,
+        link: Array.isArray(data.link) ? data.link : data.link ? [data.link] : undefined,
+        papers: Array.isArray(data.papers) ? data.papers : data.paper ? [data.paper] : data.papers ? [data.papers] : undefined,
       };
     });
 
@@ -34,6 +37,9 @@ export function getProjectBySlug(slug: string) {
       project: {
         slug,
         ...(data as Omit<ProjectMeta, "slug">),
+        github: Array.isArray(data.github) ? data.github : data.github ? [data.github] : undefined,
+        link: Array.isArray(data.link) ? data.link : data.link ? [data.link] : undefined,
+        papers: Array.isArray(data.papers) ? data.papers : data.paper ? [data.paper] : data.papers ? [data.papers] : undefined,
       },
       content,
     };

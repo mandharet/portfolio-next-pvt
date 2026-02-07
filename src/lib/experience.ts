@@ -10,6 +10,9 @@ export interface ExperienceMeta {
   description: string;
   technologies: string[];
   date: string;
+  github?: string[];
+  link?: string[];
+  papers?: string[];
 }
 
 const experiencesDirectory = path.join(
@@ -30,6 +33,9 @@ export function getAllExperiences(): ExperienceMeta[] {
       return {
         slug,
         ...(data as Omit<ExperienceMeta, "slug">),
+        github: Array.isArray(data.github) ? data.github : data.github ? [data.github] : undefined,
+        link: Array.isArray(data.link) ? data.link : data.link ? [data.link] : undefined,
+        papers: Array.isArray(data.papers) ? data.papers : data.papers ? [data.papers] : undefined,
       };
     });
 
@@ -46,6 +52,9 @@ export function getExperienceBySlug(slug: string) {
       experience: {
         slug,
         ...(data as Omit<ExperienceMeta, "slug">),
+        github: Array.isArray(data.github) ? data.github : data.github ? [data.github] : undefined,
+        link: Array.isArray(data.link) ? data.link : data.link ? [data.link] : undefined,
+        papers: Array.isArray(data.papers) ? data.papers : data.papers ? [data.papers] : undefined,
       },
       content,
     };

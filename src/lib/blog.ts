@@ -29,6 +29,9 @@ export function getAllPosts(): BlogPost[] {
         seriesOrder: data.seriesOrder,
         relatedPosts: data.relatedPosts,
         readingTime: data.readingTime,
+        github: Array.isArray(data.github) ? data.github : data.github ? [data.github] : undefined,
+        link: Array.isArray(data.link) ? data.link : data.link ? [data.link] : undefined,
+        papers: Array.isArray(data.papers) ? data.papers : data.papers ? [data.papers] : undefined,
       } as BlogPost;
     });
 
@@ -53,6 +56,9 @@ export function getPostBySlug(
       seriesOrder: data.seriesOrder,
       relatedPosts: data.relatedPosts,
       readingTime: data.readingTime,
+      github: Array.isArray(data.github) ? data.github : data.github ? [data.github] : undefined,
+      link: Array.isArray(data.link) ? data.link : data.link ? [data.link] : undefined,
+      papers: Array.isArray(data.papers) ? data.papers : data.papers ? [data.papers] : undefined,
     };
 
     return { post, content };

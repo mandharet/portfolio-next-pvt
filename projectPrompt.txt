@@ -1,0 +1,325 @@
+### **Improved Portfolio Project Prompt**
+
+**Goal:** Create a compelling portfolio entry that clearly tells the story of your project, even if it solves multiple problems. Ensure each problem is separate and easy to follow. **No code snippets** - focus on concepts and impact.
+
+---
+
+## **Prompt for GitHub Repo Analysis**
+
+**Analyze this GitHub repository and provide a structured MDX portfolio entry:**
+
+**Project Repository**: [paste GitHub URL]
+**README Content**: [paste README.md]
+
+---
+
+### **1️⃣ CATCHY TITLE & HOOK**
+
+* **Title**: Idea-driven, benefit-focused (not generic).
+  * Bad: "E-Commerce Platform"
+  * Good: "AI Shopping Assistant That Predicts What You Need"
+* **Description (Hook)**: One punchy sentence (max 120 chars) highlighting **primary value**.
+
+---
+
+### **2️⃣ VISUAL STORYTELLING**
+
+* **Hero Statement**: 1 sentence on the main problem the project solves.
+* **Architecture Diagram**: Mermaid diagram showing components & data flow.
+* **Quick Stats Table**: Key metrics (users, performance, impact).
+
+---
+
+### **3️⃣ THE STORY (Multiple Problems Supported)**
+
+For **each major problem the project solves**, provide a separate section:
+
+#### **Problem 1**
+* **Pain Point:** Who faces it & why it matters
+* **Existing Solutions:** Why they fall short
+
+#### **Solution 1**
+* Your unique approach (2–3 sentences)
+* Key innovation / differentiator
+* Visual: Mermaid flow diagram of core logic
+
+#### **Impact 1**
+* Quantifiable result or improvement
+* Optional visual: chart or before/after comparison
+
+---
+
+#### **Problem 2 (if applicable)**
+* **Pain Point:** …
+* **Existing Solutions:** …
+
+#### **Solution 2**
+* Unique approach
+* Core innovation / differentiator
+* Flow diagram if needed
+
+#### **Impact 2**
+* Metrics / result
+
+*…Repeat as needed for additional problems*
+
+---
+
+### **4️⃣ TECH STACK**
+
+Format as a table:
+
+| Category       | Technologies |
+| -------------- | ------------ |
+| Backend        | …            |
+| Frontend       | …            |
+| Database       | …            |
+| ML / AI        | …            |
+| DevOps / Tools | …            |
+
+---
+
+### **5️⃣ TECHNICAL CHALLENGES**
+
+For each challenge:
+* **Challenge:** Short description
+* **Solution:** How you solved it (concept-level, no code)
+* **Impact:** Result / lesson learned
+
+Use collapsible sections for detailed explanations:
+```mdx
+<details>
+<summary>🔍 Deep Dive: [Challenge Name]</summary>
+
+**Problem**: [Detailed explanation]
+**Solution**: [How you solved it - architecture/approach level]
+**Impact**: [Measurable result]
+</details>
+```
+
+---
+
+### **6️⃣ VISUAL ELEMENTS**
+
+* At least **2 Mermaid diagrams** (architecture + flow/pipeline)
+* 1–2 tables (tech stack, metrics, comparisons)
+* Emojis for key features (🚀 ⚡ 🎯) sparingly
+* **NO CODE SNIPPETS** - focus on diagrams and concepts
+
+---
+
+### **7️⃣ OUTPUT FORMAT (MDX)**
+
+```mdx
+---
+title: "[Catchy, Benefit-Driven Title]"
+description: "[Hook - max 120 chars]"
+date: "YYYY-MM-DD"
+tech: ["Tech1", "Tech2", "Tech3"]
+github: ["https://github.com/user/repo"]
+link: ["https://demo.com"] # Optional
+papers: ["https://paper-url"] # Optional
+image: "/projects/project-name.jpg" # Optional
+---
+
+# [Project Title]
+
+## Overview
+[Hero statement + 2-3 paragraphs summary]
+
+## Problems & Solutions
+
+### Problem 1: [Problem Name]
+
+**Pain Point**
+[Who faces it & why it matters - 2-3 sentences]
+
+**Existing Solutions**
+[Why they fall short - 1-2 sentences]
+
+### Solution 1: [Solution Name]
+
+[Your unique approach - 2-3 sentences]
+
+**Key Innovation**: [What makes it different]
+
+```mermaid
+[Flow diagram showing solution approach]
+```
+
+**Impact**
+- ⚡ [Metric 1]: [Result]
+- 🎯 [Metric 2]: [Result]
+
+---
+
+### Problem 2: [Problem Name] (if applicable)
+
+**Pain Point**
+[Description]
+
+**Existing Solutions**
+[Why they fall short]
+
+### Solution 2: [Solution Name]
+
+[Approach]
+
+**Key Innovation**: [Differentiator]
+
+```mermaid
+[Flow diagram]
+```
+
+**Impact**
+- 🚀 [Metric]: [Result]
+
+---
+
+## System Architecture
+
+```mermaid
+[High-level architecture diagram - 5-7 components]
+```
+
+<details>
+<summary>📐 View Detailed Architecture</summary>
+
+```mermaid
+[Detailed architecture with all components, data flows]
+```
+
+[Explanation of architecture decisions - why you chose this approach]
+</details>
+
+## Key Features
+
+🚀 **Feature 1** - Brief description
+⚡ **Feature 2** - Brief description
+🎯 **Feature 3** - Brief description
+
+## Technical Challenges
+
+**1. [Challenge Name]** - One-line summary
+
+<details>
+<summary>🔍 Deep Dive: [Challenge Name]</summary>
+
+**Problem**: [Detailed explanation]
+
+**Solution**: [How you solved it - architecture/approach level, no code]
+
+**Impact**: [Measurable result]
+</details>
+
+**2. [Challenge Name]** - One-line summary
+
+<details>
+<summary>🔍 Deep Dive: [Challenge Name]</summary>
+
+[Same structure]
+</details>
+
+## Tech Stack
+
+| Category       | Technologies                          |
+| -------------- | ------------------------------------- |
+| Backend        | [List technologies]                   |
+| Frontend       | [List technologies]                   |
+| Database       | [List technologies]                   |
+| ML / AI        | [List technologies if applicable]     |
+| DevOps / Tools | [List technologies]                   |
+
+## Impact & Results
+
+```mermaid
+[Metrics visualization - pie/bar chart]
+```
+
+- ⚡ **[Metric 1]**: [Result with numbers]
+- 🎯 **[Metric 2]**: [Result with numbers]
+- 🚀 **[Metric 3]**: [Result with numbers]
+```
+
+---
+
+### **8️⃣ MDX FORMATTING RULES (CRITICAL)**
+
+**⚠️ Common MDX Parsing Errors to Avoid:**
+
+1. **HTML Entities in Content**
+   - ❌ NEVER use `&amp;`, `&lt;`, `&gt;`, `&quot;` in headings or regular text
+   - ✅ Use actual characters: `&`, `<`, `>`, `"`
+   - Example: Write "React & TypeScript" NOT "React &amp; TypeScript"
+
+2. **Comparison Operators**
+   - ❌ Don't use `<` or `>` directly: "<100ms", ">50%"
+   - ✅ Use words: "under 100ms", "over 50%", "less than 100ms"
+
+3. **Numbered Headings**
+   - ❌ Don't start headings with numbers: `### 1. Problem` or `**1.`
+   - ✅ Use words: `### Problem One:` or `**Challenge One:**`
+
+4. **Mermaid Diagrams**
+   - ✅ Use standard code blocks: ` ```mermaid `
+   - ✅ No HTML entities in mermaid syntax
+   - ✅ Keep diagram labels simple, avoid special characters
+   - ❌ Don't use `<pre>` tags for mermaid
+
+5. **HTML Tags in MDX**
+   - ✅ Use actual tags: `<details>`, `<summary>`, `<br/>`
+   - ❌ Don't use HTML entities for tags
+
+6. **Line Breaks**
+   - ✅ Use `<br/>` for explicit line breaks in features/lists
+   - ✅ Use blank lines between sections
+
+**Example of Correct Formatting:**
+```mdx
+## Key Features
+
+🚀 **Feature One** - Description here<br/>
+⚡ **Feature Two** - Description here<br/>
+🎯 **Feature Three** - Description here
+
+## Technical Challenges
+
+**Challenge One: Type Safety** - Brief description
+
+<details>
+<summary>🔍 Deep Dive: Type Safety</summary>
+
+**Problem**: Detailed explanation with & characters
+
+**Solution**: How you solved it
+
+**Impact**: Results under 100ms response time
+</details>
+```
+
+---
+
+### **9️⃣ CONTENT GUIDELINES**
+
+**✅ Always Include:**
+- Clear problem statements
+- Visual diagrams (mermaid)
+- Quantifiable impact metrics
+- Architecture decisions explained
+- Multiple problems if applicable
+
+**❌ Avoid:**
+- Code snippets (HR-friendly)
+- Overly technical jargon
+- Wall of text without visuals
+- Generic descriptions
+- HTML entities in content
+- Numbered headings starting with digits
+- Comparison operators like < or >
+
+**🎯 Focus On:**
+- Business impact
+- Problem-solving approach
+- Innovation & uniqueness
+- Visual storytelling
+- Clean MDX formatting

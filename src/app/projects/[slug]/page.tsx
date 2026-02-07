@@ -17,6 +17,7 @@ import {
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import remarkGfm from "remark-gfm";
 
 export async function generateStaticParams() {
   const projects = getAllProjects();
@@ -100,47 +101,69 @@ export default async function ProjectDetailPage({
       />
       <ArticleContainer>
         <div className="space-y-4">
-          <h1 className="text-4xl md:text-5xl font-bold">{project.title}</h1>
-          <p className="text-xl text-muted-foreground">{project.description}</p>
+          <h1 className="text-3xl md:text-4xl font-bold">{project.title}</h1>
+          <p className="text-lg text-muted-foreground">{project.description}</p>
 
           <div className="flex flex-wrap gap-2">
             {project.tech.map((tech) => (
-              <Badge key={tech} variant="secondary">
+              <Badge key={tech} variant="secondary" className="text-sm px-3 py-1">
                 {tech}
               </Badge>
             ))}
           </div>
 
           <div className="flex flex-wrap gap-3">
-            {project.link && (
-              <Link href={project.link} target="_blank">
-                <Button variant="outline" size="sm">
+            {project.link?.map((url, i) => (
+              <Link key={i} href={url} target="_blank">
+                <Button variant="default" size="default">
                   <ExternalLink className="h-4 w-4 mr-2" />
-                  Live Demo
+                  Live Demo {project.link.length > 1 ? i + 1 : ""}
                 </Button>
               </Link>
-            )}
-            {project.github && (
-              <Link href={project.github} target="_blank">
-                <Button variant="outline" size="sm">
+            ))}
+            {project.github?.map((url, i) => (
+              <Link key={i} href={url} target="_blank">
+                <Button variant="default" size="default">
                   <Github className="h-4 w-4 mr-2" />
-                  Source Code
+                  Source Code {project.github.length > 1 ? i + 1 : ""}
                 </Button>
               </Link>
-            )}
-            {project.paper && (
-              <Link href={project.paper} target="_blank">
-                <Button variant="outline" size="sm">
+            ))}
+            {project.papers?.map((url, i) => (
+              <Link key={i} href={url} target="_blank">
+                <Button variant="default" size="default">
                   <FileText className="h-4 w-4 mr-2" />
-                  Research Paper
+                  Paper {project.papers.length > 1 ? i + 1 : ""}
                 </Button>
               </Link>
-            )}
+            ))}
           </div>
         </div>
 
         <div className="prose dark:prose-invert max-w-none">
-          <MDXRemote source={content} components={{ CodeBlock }} />
+          <MDXRemote
+            source={content}
+            options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
+            components={{
+              CodeBlock,
+              pre: (props: any) => {
+                const code = props.children?.props?.children;
+                const lang = props.children?.props?.className?.replace(
+                  "language-",
+                  "",
+                );
+                if (lang === "mermaid") {
+                  return <div className="mermaid">{code}</div>;
+                }
+                return <pre {...props} />;
+              },
+              table: (props: any) => (
+                <div className="overflow-x-auto">
+                  <table {...props} />
+                </div>
+              ),
+            }}
+          />
         </div>
         {multipleProjects && (
           <div className="pt-6 border-t">

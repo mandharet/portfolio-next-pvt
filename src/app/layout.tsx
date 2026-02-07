@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
-import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/shadcn/sonner";
-import { getSiteConfig, getPersonalConfig } from "@/lib/config";
+import { getPersonalConfig, getSiteConfig } from "@/lib/config";
 import { inter } from "@/lib/fonts";
+import type { Metadata } from "next";
+import "./globals.css";
 
 const siteConfig = getSiteConfig();
 const personalConfig = getPersonalConfig();
@@ -48,6 +48,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning className={inter.variable}>
+      <head>
+        <script
+          type="module"
+          dangerouslySetInnerHTML={{
+            __html: `
+              import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+              mermaid.initialize({ startOnLoad: true, theme: 'default' });
+            `,
+          }}
+        />
+      </head>
       <body className="font-sans">
         <ThemeProvider
           attribute="class"
