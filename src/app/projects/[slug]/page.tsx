@@ -146,9 +146,10 @@ export default async function ProjectDetailPage({
             options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
             components={{
               CodeBlock,
-              pre: (props: any) => {
-                const code = props.children?.props?.children;
-                const lang = props.children?.props?.className?.replace(
+              pre: (props: React.HTMLAttributes<HTMLPreElement>) => {
+                const children = props.children as React.ReactElement<{ children: string; className?: string }>;
+                const code = children?.props?.children;
+                const lang = children?.props?.className?.replace(
                   "language-",
                   "",
                 );
@@ -157,7 +158,7 @@ export default async function ProjectDetailPage({
                 }
                 return <pre {...props} />;
               },
-              table: (props: any) => (
+              table: (props: React.HTMLAttributes<HTMLTableElement>) => (
                 <div className="overflow-x-auto">
                   <table {...props} />
                 </div>

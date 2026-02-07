@@ -150,15 +150,16 @@ export default async function BlogPostPage({
             source={content} 
             components={{ 
               CodeBlock,
-              pre: (props: any) => {
-                const code = props.children?.props?.children;
-                const lang = props.children?.props?.className?.replace('language-', '');
+              pre: (props: React.HTMLAttributes<HTMLPreElement>) => {
+                const children = props.children as React.ReactElement<{ children: string; className?: string }>;
+                const code = children?.props?.children;
+                const lang = children?.props?.className?.replace('language-', '');
                 if (lang === 'mermaid') {
                   return <div className="mermaid">{code}</div>;
                 }
                 return <pre {...props} />;
               },
-              table: (props: any) => <div className="overflow-x-auto"><table {...props} /></div>
+              table: (props: React.HTMLAttributes<HTMLTableElement>) => <div className="overflow-x-auto"><table {...props} /></div>
             }} 
           />
         </div>
