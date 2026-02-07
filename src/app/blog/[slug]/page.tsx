@@ -12,6 +12,10 @@ import { Calendar, ChevronLeft, ChevronRight, Clock, ExternalLink, FileText, Git
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import remarkGfm from "remark-gfm";
+import { MermaidRenderer } from "@/components/MermaidRenderer";
+import { CodeHighlighter } from "@/components/CodeHighlighter";
+import { Giscus } from "@/components/Giscus";
 
 export async function generateStaticParams() {
   const posts = getAllPosts();
@@ -82,6 +86,7 @@ export default async function BlogPostPage({
     <>
       <BlogPostStructuredData post={post} />
       <ScrollProgress />
+      <MermaidRenderer />
 
       <StickyBreadcrumb
         items={[{ label: "Blog", href: "/blog" }, { label: post.title }]}
@@ -93,7 +98,7 @@ export default async function BlogPostPage({
             <div className="flex items-center gap-2">
               <Calendar className="h-4 w-4" />
               <time suppressHydrationWarning>
-                {new Date(post.date).toLocaleDateString()}
+                {post.date.replace(/-/g, '.')}
               </time>
             </div>
             {post.readingTime && (
@@ -147,7 +152,8 @@ export default async function BlogPostPage({
 
         <div className="prose dark:prose-invert max-w-none">
           <MDXRemote 
-            source={content} 
+            source={content}
+            options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
             components={{ 
               CodeBlock,
               pre: (props: React.HTMLAttributes<HTMLPreElement>) => {
@@ -155,7 +161,10 @@ export default async function BlogPostPage({
                 const code = children?.props?.children;
                 const lang = children?.props?.className?.replace('language-', '');
                 if (lang === 'mermaid') {
-                  return <div className="mermaid">{code}</div>;
+                  return <div className="mermaid" suppressHydrationWarning>{code}</div>;
+                }
+                if (lang && code) {
+                  return <CodeHighlighter language={lang} code={code} />;
                 }
                 return <pre {...props} />;
               },
@@ -223,6 +232,11 @@ export default async function BlogPostPage({
             </div>
           </div>
         )}
+
+        <div className="pt-8 border-t">
+          <h2 className="text-2xl font-bold mb-4">Comments</h2>
+          <Giscus />
+        </div>
       </ArticleContainer>
     </>
   );
