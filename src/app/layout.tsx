@@ -55,6 +55,15 @@ export default function RootLayout({
             __html: `
               import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
               mermaid.initialize({ startOnLoad: true, theme: 'default' });
+              
+              // Re-render mermaid on page load
+              if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => {
+                  mermaid.run();
+                });
+              } else {
+                mermaid.run();
+              }
             `,
           }}
         />

@@ -101,7 +101,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                 <CardHeader>
                   <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
                     <Calendar className="h-4 w-4" />
-                    <time>{new Date(post.date).toLocaleDateString()}</time>
+                    <time>{post.date.replace(/-/g, '.')}</time>
                     {post.readingTime && <span>• {post.readingTime}</span>}
                   </div>
                   <CardTitle className="hover:text-primary transition-colors">

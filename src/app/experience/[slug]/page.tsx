@@ -10,6 +10,8 @@ import { Calendar, ChevronLeft, ChevronRight, ExternalLink, FileText, Github } f
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { MermaidRenderer } from "@/components/MermaidRenderer";
+import { CodeHighlighter } from "@/components/CodeHighlighter";
 
 export async function generateStaticParams() {
   const experiences = getAllExperiences();
@@ -62,6 +64,7 @@ export default async function ExperienceDetailPage({
     <>
       <ExperienceStructuredData experience={experience} />
       <ScrollProgress />
+      <MermaidRenderer />
       <StickyBreadcrumb
         items={[
           { label: "Experience", href: "/experience" },
@@ -126,7 +129,10 @@ export default async function ExperienceDetailPage({
                 const code = children?.props?.children;
                 const lang = children?.props?.className?.replace('language-', '');
                 if (lang === 'mermaid') {
-                  return <div className="mermaid">{code}</div>;
+                  return <div className="mermaid" suppressHydrationWarning>{code}</div>;
+                }
+                if (lang && code) {
+                  return <CodeHighlighter language={lang} code={code} />;
                 }
                 return <pre {...props} />;
               },
