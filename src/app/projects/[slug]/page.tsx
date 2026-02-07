@@ -18,6 +18,9 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import remarkGfm from "remark-gfm";
+import { MermaidRenderer } from "@/components/MermaidRenderer";
+import { CodeHighlighter } from "@/components/CodeHighlighter";
+import { Giscus } from "@/components/Giscus";
 
 export async function generateStaticParams() {
   const projects = getAllProjects();
@@ -93,6 +96,7 @@ export default async function ProjectDetailPage({
     <>
       <ProjectStructuredData project={project} />
       <ScrollProgress />
+      <MermaidRenderer />
       <StickyBreadcrumb
         items={[
           { label: "Projects", href: "/projects" },
@@ -154,7 +158,10 @@ export default async function ProjectDetailPage({
                   "",
                 );
                 if (lang === "mermaid") {
-                  return <div className="mermaid">{code}</div>;
+                  return <div className="mermaid" suppressHydrationWarning>{code}</div>;
+                }
+                if (lang && code) {
+                  return <CodeHighlighter language={lang} code={code} />;
                 }
                 return <pre {...props} />;
               },
@@ -202,6 +209,11 @@ export default async function ProjectDetailPage({
             </div>
           </div>
         )}
+
+        <div className="pt-8 border-t">
+          <h2 className="text-2xl font-bold mb-4">Comments</h2>
+          <Giscus category="project" />
+        </div>
       </ArticleContainer>
     </>
   );

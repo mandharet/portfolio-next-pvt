@@ -16,8 +16,10 @@ A modern, SEO-optimized portfolio website built with Next.js 15, TypeScript, and
 - 🎨 **Beautiful Design** - Modern UI with dark/light mode
 - ⚙️ **YAML Configuration** - Update your info without touching code
 - 📝 **MDX Blog** - Write posts in Markdown with React components
+- 💬 **Giscus Comments** - GitHub Discussions powered comments
 - 📊 **Mermaid Diagrams** - Visualize architecture and workflows
 - 📋 **Markdown Tables** - Display data in responsive tables
+- 🎨 **Syntax Highlighting** - Beautiful code blocks with copy button
 - 🔍 **SEO Ready** - Sitemap, metadata, structured data included
 - 📱 **Mobile First** - Fully responsive on all devices
 - 🚀 **Fast** - Static generation, optimized performance
@@ -156,10 +158,12 @@ That's it! Your content appears automatically.
 - ✅ Homepage with hero section
 - ✅ About page with skills & bio
 - ✅ Blog with MDX support
+- ✅ Giscus comments on blog posts and projects
 - ✅ Project showcase with image cards
 - ✅ Experience timeline
 - ✅ Mermaid diagram support
 - ✅ Markdown table support
+- ✅ Syntax highlighting with copy button
 - ✅ Multiple URLs per project (GitHub, demo, papers)
 - ✅ Dark/Light mode toggle
 - ✅ Mobile-friendly navigation
@@ -201,7 +205,9 @@ That's it! Your content appears automatically.
 - **Tailwind CSS 4** - Styling
 - **MDX** - Markdown with React components
 - **Mermaid** - Diagram and flowchart support
+- **Giscus** - GitHub Discussions powered comments
 - **remark-gfm** - GitHub Flavored Markdown (tables, etc.)
+- **react-syntax-highlighter** - Code syntax highlighting
 - **YAML** - Configuration files
 - **shadcn/ui** - UI components
 
@@ -240,6 +246,23 @@ Found a bug? Have a feature idea? Contributions are welcome!
 - Customize colors in `src/app/globals.css`
 - Write regularly - fresh content helps SEO!
 - Check `projectPrompt.txt` for portfolio entry template
+
+### Setting Up Comments (Giscus)
+
+1. Create a public GitHub repository for discussions
+2. Enable Discussions in repo settings
+3. Install [Giscus app](https://github.com/apps/giscus)
+4. Go to [giscus.app](https://giscus.app) and configure:
+   - Select your repository
+   - Choose "pathname" mapping
+   - Create categories: "Blog Comments" and "Project Discussions"
+   - Copy the configuration values
+5. Update `src/components/Giscus.tsx` with your values:
+   - `data-repo`
+   - `data-repo-id`
+   - `data-category-id` for both categories
+
+**Note:** Giscus IDs are safe to commit - they're public identifiers, not secrets!
 
 ---
 
