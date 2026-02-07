@@ -4,7 +4,9 @@ export interface ProjectMeta {
   description: string;
   date: string;
   tech: string[];
-  link?: string;
-  github?: string;
-  paper?: string;
+  link?: string[];
+  github?: string[];
+  papers?: string[];
+  image?: string;
+  tags?: string[];
 }

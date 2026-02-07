@@ -19,8 +19,8 @@ export function StickyBreadcrumb({ items }: { items: BreadcrumbItem[] }) {
         <Breadcrumb>
           <BreadcrumbList>
             {items.map((item, index) => (
-              <>
-                <BreadcrumbItem key={item.label}>
+              <div key={item.label} style={{ display: 'contents' }}>
+                <BreadcrumbItem>
                   {item.href ? (
                     <BreadcrumbLink href={item.href}>
                       {item.label}
@@ -29,10 +29,8 @@ export function StickyBreadcrumb({ items }: { items: BreadcrumbItem[] }) {
                     <BreadcrumbPage>{item.label}</BreadcrumbPage>
                   )}
                 </BreadcrumbItem>
-                {index < items.length - 1 && (
-                  <BreadcrumbSeparator key={`sep-${index}`} />
-                )}
-              </>
+                {index < items.length - 1 && <BreadcrumbSeparator />}
+              </div>
             ))}
           </BreadcrumbList>
         </Breadcrumb>

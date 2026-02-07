@@ -8,7 +8,7 @@ import { ArticleContainer } from "@/components/ui/wrapper/article-container";
 import { StickyBreadcrumb } from "@/components/ui/wrapper/sticky-breadcrumb";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
 import { getSiteConfig } from "@/lib/config";
-import { Calendar, ChevronLeft, ChevronRight, Clock } from "lucide-react";
+import { Calendar, ChevronLeft, ChevronRight, Clock, ExternalLink, FileText, Github } from "lucide-react";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -116,10 +116,51 @@ export default async function BlogPostPage({
               ))}
             </div>
           )}
+
+          <div className="flex flex-wrap gap-3">
+            {post.link?.map((url, i) => (
+              <Link key={i} href={url} target="_blank">
+                <Button variant="outline" size="sm">
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                  Link {post.link.length > 1 ? i + 1 : ''}
+                </Button>
+              </Link>
+            ))}
+            {post.github?.map((url, i) => (
+              <Link key={i} href={url} target="_blank">
+                <Button variant="outline" size="sm">
+                  <Github className="h-4 w-4 mr-2" />
+                  Source {post.github.length > 1 ? i + 1 : ''}
+                </Button>
+              </Link>
+            ))}
+            {post.papers?.map((url, i) => (
+              <Link key={i} href={url} target="_blank">
+                <Button variant="outline" size="sm">
+                  <FileText className="h-4 w-4 mr-2" />
+                  Paper {post.papers.length > 1 ? i + 1 : ''}
+                </Button>
+              </Link>
+            ))}
+          </div>
         </div>
 
         <div className="prose dark:prose-invert max-w-none">
-          <MDXRemote source={content} components={{ CodeBlock }} />
+          <MDXRemote 
+            source={content} 
+            components={{ 
+              CodeBlock,
+              pre: (props: any) => {
+                const code = props.children?.props?.children;
+                const lang = props.children?.props?.className?.replace('language-', '');
+                if (lang === 'mermaid') {
+                  return <div className="mermaid">{code}</div>;
+                }
+                return <pre {...props} />;
+              },
+              table: (props: any) => <div className="overflow-x-auto"><table {...props} /></div>
+            }} 
+          />
         </div>
 
         {post.relatedPosts && post.relatedPosts.length > 0 && (

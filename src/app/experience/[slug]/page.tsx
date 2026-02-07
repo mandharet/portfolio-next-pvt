@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/shadcn/button";
 import { ArticleContainer } from "@/components/ui/wrapper/article-container";
 import { StickyBreadcrumb } from "@/components/ui/wrapper/sticky-breadcrumb";
 import { getAllExperiences, getExperienceBySlug } from "@/lib/experience";
-import { Calendar, ChevronLeft, ChevronRight } from "lucide-react";
+import { Calendar, ChevronLeft, ChevronRight, ExternalLink, FileText, Github } from "lucide-react";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -87,10 +87,51 @@ export default async function ExperienceDetailPage({
               </Badge>
             ))}
           </div>
+
+          <div className="flex flex-wrap gap-3">
+            {experience.link?.map((url, i) => (
+              <Link key={i} href={url} target="_blank">
+                <Button variant="outline" size="sm">
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                  Link {experience.link.length > 1 ? i + 1 : ''}
+                </Button>
+              </Link>
+            ))}
+            {experience.github?.map((url, i) => (
+              <Link key={i} href={url} target="_blank">
+                <Button variant="outline" size="sm">
+                  <Github className="h-4 w-4 mr-2" />
+                  Source {experience.github.length > 1 ? i + 1 : ''}
+                </Button>
+              </Link>
+            ))}
+            {experience.papers?.map((url, i) => (
+              <Link key={i} href={url} target="_blank">
+                <Button variant="outline" size="sm">
+                  <FileText className="h-4 w-4 mr-2" />
+                  Paper {experience.papers.length > 1 ? i + 1 : ''}
+                </Button>
+              </Link>
+            ))}
+          </div>
         </div>
 
         <div className="prose dark:prose-invert max-w-none">
-          <MDXRemote source={content} components={{ CodeBlock }} />
+          <MDXRemote 
+            source={content} 
+            components={{ 
+              CodeBlock,
+              pre: (props: any) => {
+                const code = props.children?.props?.children;
+                const lang = props.children?.props?.className?.replace('language-', '');
+                if (lang === 'mermaid') {
+                  return <div className="mermaid">{code}</div>;
+                }
+                return <pre {...props} />;
+              },
+              table: (props: any) => <div className="overflow-x-auto"><table {...props} /></div>
+            }} 
+          />
         </div>
         {multipleExperiences && (
           <div className="pt-6 border-t">
