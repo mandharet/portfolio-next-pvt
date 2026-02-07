@@ -10,8 +10,9 @@ import {
 } from "@/components/ui/shadcn/card";
 import { Badge } from "@/components/ui/shadcn/badge";
 import { Button } from "@/components/ui/shadcn/button";
+import { Input } from "@/components/ui/shadcn/input";
 import Link from "next/link";
-import { Calendar, ArrowUpDown } from "lucide-react";
+import { Calendar, ArrowUpDown, Search } from "lucide-react";
 import {
   Pagination,
   PaginationContent,
@@ -27,25 +28,24 @@ const POSTS_PER_PAGE = 10;
 export default function BlogList({ posts }: { posts: BlogPost[] }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
-
-  const allTags = useMemo(() => {
-    const tags = new Set<string>();
-    posts.forEach((post) => post.tags.forEach((tag) => tags.add(tag)));
-    return Array.from(tags).sort();
-  }, [posts]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const filteredAndSortedPosts = useMemo(() => {
-    const filtered = selectedTag
-      ? posts.filter((post) => post.tags.includes(selectedTag))
-      : posts;
+    const filtered = posts.filter((post) => {
+      const query = searchQuery.toLowerCase();
+      return (
+        post.title.toLowerCase().includes(query) ||
+        post.description.toLowerCase().includes(query) ||
+        post.tags.some((tag) => tag.toLowerCase().includes(query))
+      );
+    });
 
     return filtered.sort((a, b) => {
       const dateA = new Date(a.date).getTime();
       const dateB = new Date(b.date).getTime();
       return sortOrder === "newest" ? dateB - dateA : dateA - dateB;
     });
-  }, [posts, selectedTag, sortOrder]);
+  }, [posts, searchQuery, sortOrder]);
 
   const totalPages = Math.ceil(filteredAndSortedPosts.length / POSTS_PER_PAGE);
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
@@ -54,41 +54,31 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
     startIndex + POSTS_PER_PAGE,
   );
 
-  const handleTagFilter = (tag: string | null) => {
-    setSelectedTag(tag);
-    setCurrentPage(1);
-  };
-
   const toggleSort = () => {
     setSortOrder((prev) => (prev === "newest" ? "oldest" : "newest"));
   };
 
+  const handleSearch = (value: string) => {
+    setSearchQuery(value);
+    setCurrentPage(1);
+  };
+
   return (
     <div className="space-y-6">
-      {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <div className="flex flex-wrap gap-2">
-          <Button
-            variant={selectedTag === null ? "default" : "outline"}
-            size="sm"
-            onClick={() => handleTagFilter(null)}
-          >
-            All
-          </Button>
-          {allTags.map((tag) => (
-            <Button
-              key={tag}
-              variant={selectedTag === tag ? "default" : "outline"}
-              size="sm"
-              onClick={() => handleTagFilter(tag)}
-            >
-              {tag}
-            </Button>
-          ))}
+      {/* Search and Sort */}
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search posts by title, description, or tags..."
+            value={searchQuery}
+            onChange={(e) => handleSearch(e.target.value)}
+            className="pl-10"
+          />
         </div>
-        <Button variant="outline" size="sm" onClick={toggleSort}>
+        <Button variant="outline" size="default" onClick={toggleSort}>
           <ArrowUpDown className="h-4 w-4 mr-2" />
-          {sortOrder === "newest" ? "Newest First" : "Oldest First"}
+          {sortOrder === "newest" ? "Newest" : "Oldest"}
         </Button>
       </div>
 
@@ -97,7 +87,9 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
         <Card>
           <CardContent className="pt-6">
             <p className="text-muted-foreground text-center py-8">
-              No posts found with the selected filter.
+              {searchQuery
+                ? `No posts found matching "${searchQuery}"`
+                : "No posts found."}
             </p>
           </CardContent>
         </Card>
