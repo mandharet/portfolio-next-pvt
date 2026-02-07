@@ -93,7 +93,7 @@ export default async function ExperienceDetailPage({
               <Link key={i} href={url} target="_blank">
                 <Button variant="outline" size="sm">
                   <ExternalLink className="h-4 w-4 mr-2" />
-                  Link {experience.link.length > 1 ? i + 1 : ''}
+                  Link {experience.link && experience.link.length > 1 ? i + 1 : ''}
                 </Button>
               </Link>
             ))}
@@ -101,7 +101,7 @@ export default async function ExperienceDetailPage({
               <Link key={i} href={url} target="_blank">
                 <Button variant="outline" size="sm">
                   <Github className="h-4 w-4 mr-2" />
-                  Source {experience.github.length > 1 ? i + 1 : ''}
+                  Source {experience.github && experience.github.length > 1 ? i + 1 : ''}
                 </Button>
               </Link>
             ))}
@@ -109,7 +109,7 @@ export default async function ExperienceDetailPage({
               <Link key={i} href={url} target="_blank">
                 <Button variant="outline" size="sm">
                   <FileText className="h-4 w-4 mr-2" />
-                  Paper {experience.papers.length > 1 ? i + 1 : ''}
+                  Paper {experience.papers && experience.papers.length > 1 ? i + 1 : ''}
                 </Button>
               </Link>
             ))}

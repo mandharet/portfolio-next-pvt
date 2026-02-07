@@ -122,7 +122,7 @@ export default async function BlogPostPage({
               <Link key={i} href={url} target="_blank">
                 <Button variant="outline" size="sm">
                   <ExternalLink className="h-4 w-4 mr-2" />
-                  Link {post.link.length > 1 ? i + 1 : ''}
+                  Link {post.link && post.link.length > 1 ? i + 1 : ''}
                 </Button>
               </Link>
             ))}
@@ -130,7 +130,7 @@ export default async function BlogPostPage({
               <Link key={i} href={url} target="_blank">
                 <Button variant="outline" size="sm">
                   <Github className="h-4 w-4 mr-2" />
-                  Source {post.github.length > 1 ? i + 1 : ''}
+                  Source {post.github && post.github.length > 1 ? i + 1 : ''}
                 </Button>
               </Link>
             ))}
@@ -138,7 +138,7 @@ export default async function BlogPostPage({
               <Link key={i} href={url} target="_blank">
                 <Button variant="outline" size="sm">
                   <FileText className="h-4 w-4 mr-2" />
-                  Paper {post.papers.length > 1 ? i + 1 : ''}
+                  Paper {post.papers && post.papers.length > 1 ? i + 1 : ''}
                 </Button>
               </Link>
             ))}
