@@ -53,6 +53,7 @@ keywords: ["Your", "Keywords"]
 Edit `src/config/personal.yaml`, `src/config/home.yaml`, and `src/config/about.yaml` with your information.
 
 **Note:** After updating YAML files, also update:
+
 - `src/app/opengraph-image.tsx` (lines 4, 27, 35, 43) - for social media previews
 - `public/og-image.svg` (optional fallback)
 
@@ -100,7 +101,7 @@ Your content here...
 
 **Project** (`src/content/projects/my-project.mdx`):
 
-```mdx
+````mdx
 ---
 title: "My Project"
 description: "Brief description"
@@ -123,14 +124,16 @@ graph LR
     A[Frontend] --> B[API]
     B --> C[Database]
 ```
+````
 
 ## Tech Stack
 
-| Category | Technologies |
-|----------|-------------|
-| Frontend | React, Next.js |
+| Category | Technologies     |
+| -------- | ---------------- |
+| Frontend | React, Next.js   |
 | Backend  | Node.js, Express |
-```
+
+````
 
 **Experience** (`src/content/experiences/my-job.mdx`):
 
@@ -147,7 +150,7 @@ date: "2023-01-01"
 # My Experience
 
 Details about your role...
-```
+````
 
 That's it! Your content appears automatically.
 
@@ -249,6 +252,8 @@ Found a bug? Have a feature idea? Contributions are welcome!
 
 ### Setting Up Comments (Giscus)
 
+**Quick Setup:**
+
 1. Create a public GitHub repository for discussions
 2. Enable Discussions in repo settings
 3. Install [Giscus app](https://github.com/apps/giscus)
@@ -263,6 +268,8 @@ Found a bug? Have a feature idea? Contributions are welcome!
    - `data-category-id` for both categories
 
 **Note:** Giscus IDs are safe to commit - they're public identifiers, not secrets!
+
+📖 **[Read the detailed setup guide](https://tejas.mandhare.com/blog/adding-giscus-comments-portfolio)** - Complete walkthrough with code examples, troubleshooting, and best practices.
 
 ---
 
