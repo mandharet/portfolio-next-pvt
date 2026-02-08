@@ -1,5 +1,5 @@
-import { MDXComponents } from "mdx/types";
 import { CodeBlock } from "@/components/ui/aceternity/code-block";
+import { MDXComponents } from "mdx/types";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -44,11 +44,14 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     a: ({ href, children }) => (
       <a
         href={href}
-        className="text-primary hover:underline"
+        className="text-primary underline underline-offset-2 hover:text-primary/80 transition-colors"
         target={href?.startsWith("http") ? "_blank" : undefined}
         rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
       >
         {children}
+        {href?.startsWith("http") && (
+          <span className="inline-block ml-1 text-xs">↗</span>
+        )}
       </a>
     ),
     CodeBlock,
