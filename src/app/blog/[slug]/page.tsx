@@ -156,6 +156,19 @@ export default async function BlogPostPage({
             options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
             components={{ 
               CodeBlock,
+              a: ({ href, children }: { href?: string; children?: React.ReactNode }) => (
+                <a
+                  href={href}
+                  className="text-primary underline underline-offset-2 hover:text-primary/80 transition-colors"
+                  target={href?.startsWith("http") ? "_blank" : undefined}
+                  rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
+                >
+                  {children}
+                  {href?.startsWith("http") && (
+                    <span className="inline-block ml-1 text-xs">↗</span>
+                  )}
+                </a>
+              ),
               pre: (props: React.HTMLAttributes<HTMLPreElement>) => {
                 const children = props.children as React.ReactElement<{ children: string; className?: string }>;
                 const code = children?.props?.children;
