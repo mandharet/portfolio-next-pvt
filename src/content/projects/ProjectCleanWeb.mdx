@@ -1,7 +1,7 @@
 ---
-title: "AI Civic Grievance Platform"
+title: "Civic Grievance Platform & Backend"
 description: "AI-powered platform reducing civic issue resolution time by 70% through intelligent severity analysis and community engagement"
-date: "2021-10-10"
+date: "2021-10-11"
 tech:
   [
     "Django",
@@ -22,17 +22,24 @@ Citizens report civic issues like overflowing garbage, dangerous potholes, and f
 
 The platform bridges citizens and government through a dual-interface system: an Android app for easy issue reporting with photos and location data, and a web dashboard for municipal authorities to manage and track resolutions. Published in the International Research Journal of Engineering and Technology (IRJET), this research demonstrates how AI can transform civic engagement and resource allocation.
 
-**Quick Impact Stats**
+**System Components:**
 
-| Metric                       | Result                              |
-| ---------------------------- | ----------------------------------- |
-| Manual Assessment Time Saved | 70% reduction                       |
-| Priority Calculation Speed   | &lt;100ms per grievance             |
-| Bandwidth Optimization       | 60% reduction via smart compression |
-| Workflow Stages              | 5-stage tracking system             |
-| Supported Platforms          | Web + Android                       |
+- Django REST API with TensorFlow CNN for severity classification
+- Multi-factor priority algorithm (severity, upvotes, category, time)
+- Web dashboard for municipal workflow management
+- [Android mobile app](/projects/ProjectCleanAndroid) for citizen reporting
 
----
+Published in [International Research Journal of Engineering and Technology (IRJET)](https://www.irjet.net/archives/V9/i4/IRJET-V9I4373.pdf).
+
+**Key Metrics**
+
+| Metric            | Result           |
+| ----------------- | ---------------- |
+| Triage Time Saved | 70% reduction    |
+| Priority Updates  | under 100ms      |
+| ML Inference      | under 2 seconds  |
+| Bandwidth Saved   | 60% via CDN      |
+| Workflow Stages   | 5-stage tracking |
 
 ## Problems & Solutions
 
@@ -40,17 +47,13 @@ The platform bridges citizens and government through a dual-interface system: an
 
 **Pain Point**
 
-Municipal authorities receive hundreds of civic grievance reports daily. Each submission requires manual review to assess severity—is this pothole dangerous enough for immediate repair? Does this garbage pile pose health risks? This manual triage process creates significant delays, with critical issues sometimes buried under less urgent reports. Staff spend hours reviewing images and descriptions, leading to slow response times and citizen frustration.
+Municipal staff manually review hundreds of daily reports to assess urgency. Critical issues get buried under low-priority complaints. Hours wasted on image review.
 
-**Existing Solutions**
+**Solution**
 
-Traditional systems rely on first-come-first-served queues or manual categorization by staff. Some platforms use simple keyword matching or citizen-selected severity levels, but these approaches are unreliable—citizens often overstate urgency, and keyword matching lacks visual context. No existing solution automatically analyzes the actual condition shown in submitted photos.
+TensorFlow CNN automatically classifies severity (high/medium/low) from uploaded photos. Analyzes garbage pile size, pothole depth, tree obstruction.
 
-### Solution 1: AI-Powered Image Severity Analysis
-
-The platform integrates a Convolutional Neural Network (CNN) trained on civic issue imagery to automatically classify severity levels (high/medium/low) the moment a citizen uploads a photo. The ML model analyzes visual indicators—garbage pile size, pothole depth, tree obstruction level—providing instant, objective severity ratings without human intervention.
-
-**Key Innovation**: Real-time image analysis pipeline that preprocesses uploads, runs inference, and assigns severity scores within seconds of submission, eliminating the manual review bottleneck entirely.
+**Implementation**: Preprocessing pipeline standardizes uploads to 200x200 grayscale (70% size reduction). CNN loads once at startup, persists in memory. Cloudinary CDN optimizes to 450x600 @ 80% quality before storage.
 
 ```mermaid
 graph LR
@@ -68,27 +71,23 @@ graph LR
 
 **Impact**
 
-- ⚡ **70% Time Reduction**: Automated classification eliminates manual image review
-- 🎯 **Instant Processing**: Severity assigned in &lt;2 seconds per submission
-- 🚀 **Objective Assessment**: ML removes human bias and inconsistency
+- ⚡ **Under 2s Inference**: Down from 5-10s initial implementation
+- 🎯 **70% Time Saved**: Eliminates manual review
+- 🚀 **60% Bandwidth**: Cloudinary optimization
 
 ---
 
-### Problem 2: No Intelligent Prioritization System
+### Problem 2: No Unified Prioritization Logic
 
 **Pain Point**
 
-Even with severity ratings, municipal teams lack a unified system to prioritize work. A medium-severity pothole reported 30 days ago might be more urgent than a high-severity issue from yesterday. Community concern matters too—an issue with 50 citizen upvotes signals widespread impact. Different issue types (garbage vs. fallen trees) require different response protocols. Without a holistic prioritization algorithm, teams struggle to allocate resources effectively.
+How to prioritize: 30-day-old medium-severity pothole vs yesterday's high-severity issue? 50 upvotes signal widespread impact. Different issue types need different protocols.
 
-**Existing Solutions**
+**Solution**
 
-Most platforms use single-factor sorting (newest first, highest severity first, or most upvoted). This oversimplifies complex prioritization needs. Some systems allow manual priority assignment, but this reintroduces human bottlenecks and inconsistency. No existing solution dynamically balances multiple factors in real-time.
+4-factor weighted scoring (1-10 scale): ML severity (30%), community upvotes (40%), category (20%), days elapsed (10%). Auto-recalculates on every upvote or time change.
 
-### Solution 2: Multi-Factor Dynamic Priority Algorithm
-
-The platform implements a weighted scoring system that continuously recalculates priority scores (1-10 scale) based on four factors: ML-detected severity (30% weight), community upvotes (40% weight), issue category importance (20% weight), and days elapsed since reporting (10% weight). As citizens upvote issues or time passes, priorities automatically adjust, ensuring the most critical and community-impacted problems rise to the top.
-
-**Key Innovation**: Real-time priority recalculation using Django signals that trigger on every upvote or status change, with optimized database queries and caching to handle concurrent updates without performance degradation.
+**Implementation**: Django post_save signals trigger selective recalculation—only affected grievances update. Database indexing on priority/timestamp, Redis caching, atomic transactions prevent race conditions.
 
 ```mermaid
 graph TD
@@ -110,27 +109,23 @@ graph TD
 
 **Impact**
 
-- 🎯 **Dynamic Ranking**: Priorities update in &lt;100ms as conditions change
-- ⚡ **Balanced Decision-Making**: Four-factor algorithm captures urgency holistically
-- 🚀 **Community Voice**: 40% weight on upvotes ensures citizen concerns drive action
+- 🎯 **Under 100ms Updates**: Under concurrent load
+- ⚡ **50+ Simultaneous Upvotes**: No degradation
+- 🚀 **85% Faster**: Database optimization
 
 ---
 
-### Problem 3: Disconnected Citizen-Government Communication
+### Problem 3: Citizen-Government Communication Gap
 
 **Pain Point**
 
-Citizens submit grievances and then face a black box—no visibility into whether their report was received, reviewed, or resolved. They can't track progress or know if others face the same issue in their neighborhood. Municipal authorities lack tools to communicate status updates or coordinate with field teams. This opacity erodes trust and leads to duplicate reports for the same problem.
+Citizens submit reports into a black box—no status visibility. Can't see if neighbors reported same issue. Creates distrust and duplicate reports.
 
-**Existing Solutions**
+**Solution**
 
-Traditional systems use email confirmations or phone hotlines for status updates, requiring manual effort from both citizens and staff. Some platforms offer basic status pages, but lack real-time updates, geospatial visualization, or community engagement features. No existing solution creates a transparent, two-way communication channel with public visibility.
+Public feed displays all grievances with photo, map, severity, status. Citizens upvote, track 5-stage progress (Register → Pending → In Progress → Complete/Rejected). Municipal updates sync instantly to feed and [mobile app](/projects/ProjectCleanAndroid).
 
-### Solution 3: Transparent Public Grievance Feed with Geospatial Tracking
-
-The platform creates a public feed where every grievance becomes a visible post with photo, location map, severity rating, and current status. Citizens can view issues in their area, upvote to signal shared concern, and track resolution progress through five workflow stages (Register → Pending → In Progress → Complete/Rejected). Municipal authorities update statuses from their dashboard, with changes instantly reflected in the public feed and mobile app.
-
-**Key Innovation**: RESTful API architecture with token authentication synchronizes data between web dashboard, Android app, and public feed in real-time, while geospatial indexing enables location-based filtering and pattern analysis.
+**Implementation**: RESTful API with token auth. Django REST Framework serializers enforce consistent formatting. Atomic transactions (transaction.atomic()) prevent race conditions. Timestamp-based conflict resolution with audit logging.
 
 ```mermaid
 graph TB
@@ -151,149 +146,38 @@ graph TB
 
 **Impact**
 
-- 🚀 **Full Transparency**: Citizens track their reports through 5 workflow stages
-- ⚡ **Community Engagement**: Public feed enables upvoting and shared awareness
-- 🎯 **Geospatial Insights**: Location data reveals problem hotspots for proactive planning
-
----
+- 🚀 **Under 1 Second Sync**: Status updates across platforms
+- ⚡ **Zero Data Corruption**: Atomic transactions
+- 🎯 **Offline Support**: Conflict-free reconnection
 
 ## System Architecture
 
 ```mermaid
 graph TB
-    subgraph "Citizen Layer"
-        A[Android App]
-        B[Web Public Feed]
-    end
-
-    subgraph "API Layer"
-        C[Django REST Framework]
-        D[Token Authentication]
-    end
-
-    subgraph "Application Layer"
-        E[Grievance Management]
-        F[ML Severity Engine]
-        G[Priority Calculator]
-        H[Municipal Dashboard]
-    end
-
-    subgraph "Data Layer"
-        I[PostgreSQL Database]
-        J[Cloudinary CDN]
-        K[Geospatial Service]
-    end
-
-    A --> C
-    B --> C
-    C --> D
-    D --> E
-    E --> F
-    E --> G
-    E --> H
-    F --> I
-    G --> I
-    H --> I
-    E --> J
-    E --> K
+    A[Android App] --> B[Django REST API]
+    C[Web Dashboard] --> B
+    B --> D[TensorFlow CNN]
+    B --> E[Priority Engine]
+    B --> F[PostgreSQL]
+    B --> G[Cloudinary CDN]
 ```
 
-<details>
-<summary>📐 View Detailed Architecture</summary>
+**Stack**: Django 4.0.1 + DRF 3.13.1, TensorFlow 2.8.0, PostgreSQL, Cloudinary, Docker + Nginx + Gunicorn
 
-```mermaid
-graph TB
-    subgraph "Mobile Client"
-        A1[Camera Capture]
-        A2[GPS Location]
-        A3[Description Input]
-    end
-
-    subgraph "API Gateway"
-        B1[REST Endpoints]
-        B2[Token Auth]
-        B3[Request Validation]
-    end
-
-    subgraph "Core Services"
-        C1[User Management]
-        C2[Grievance CRUD]
-        C3[Image Processing]
-        C4[ML Inference]
-        C5[Priority Engine]
-        C6[Workflow Manager]
-    end
-
-    subgraph "Data Storage"
-        D1[User Profiles]
-        D2[Grievance Records]
-        D3[Activity Logs]
-        D4[Image Assets]
-    end
-
-    subgraph "External Services"
-        E1[Cloudinary CDN]
-        E2[Geopy Geocoding]
-        E3[Email Notifications]
-    end
-
-    subgraph "Admin Interface"
-        F1[Dashboard Views]
-        F2[Folder Management]
-        F3[Status Updates]
-        F4[Analytics]
-    end
-
-    A1 --> B1
-    A2 --> B1
-    A3 --> B1
-    B1 --> B2
-    B2 --> B3
-    B3 --> C2
-    C2 --> C3
-    C3 --> C4
-    C4 --> C5
-    C5 --> D2
-    C2 --> D2
-    C1 --> D1
-    C6 --> D3
-    C3 --> E1
-    C2 --> E2
-    C6 --> E3
-    D2 --> F1
-    F1 --> F2
-    F2 --> F3
-    F3 --> C6
-    D2 --> F4
-```
-
-**Architecture Decisions**
-
-The system uses Django's MVT pattern with modular app structure for maintainability. The REST API layer decouples mobile and web clients, enabling independent development and scaling. Cloudinary CDN offloads image storage and transformation, reducing server load by 60%. PostgreSQL provides robust relational data management with geospatial extensions for location queries. Django signals enable event-driven priority recalculation without tight coupling between components.
-
-</details>
-
----
+**Mobile Client**: See [Android app](/projects/ProjectCleanAndroid) for Kotlin implementation, offline-first architecture, EXIF geolocation, and 512KB compression.
 
 ## Key Features
 
-🚀 **Automated ML Severity Classification** - CNN model analyzes uploaded images to instantly categorize issue severity without manual review
+🚀 **CNN Severity Classification** - Instant categorization from photos  
+⚡ **Dynamic Priority Scoring** - 4-factor weighted algorithm (severity, upvotes, category, time)  
+🎯 **Geospatial Mapping** - Location-based filtering and hotspot analysis  
+📊 **5-Stage Workflow** - Register → Pending → In Progress → Complete/Rejected  
+🔄 **Real-Time Sync** - Web dashboard + Android app synchronized  
+👥 **Public Feed** - Community upvoting and transparency
 
-⚡ **Dynamic Priority Scoring** - Four-factor weighted algorithm (severity, upvotes, category, time) continuously ranks grievances for optimal resource allocation
+## Technical Highlights
 
-🎯 **Geospatial Issue Mapping** - Automatic location capture and visualization enables pattern recognition and efficient field team deployment
-
-📊 **Municipal Workflow Dashboard** - Five-stage status tracking (Register → Pending → In Progress → Complete/Rejected) with folder organization and activity logging
-
-🔄 **Real-Time Cross-Platform Sync** - RESTful API with token authentication keeps web dashboard and Android app data synchronized
-
-👥 **Public Transparency Feed** - Community members view, upvote, and track all grievances in their area, fostering civic engagement
-
----
-
-## Technical Challenges
-
-**1. Real-Time Priority Recalculation Without Performance Degradation** - Maintaining sub-100ms updates as upvotes and time factors change
+**1. Priority Recalculation Performance**
 
 <details>
 <summary>🔍 Deep Dive: Dynamic Priority System</summary>
@@ -302,11 +186,11 @@ The system uses Django's MVT pattern with modular app structure for maintainabil
 
 **Solution**: Implemented Django post_save signals with optimized normalization functions that calculate weighted scores using indexed database fields. Applied selective recalculation—only affected grievances update, not the entire dataset. Introduced database-level indexing on priority and timestamp fields, and implemented Redis caching for frequently accessed priority rankings. Used atomic transactions to prevent race conditions during concurrent updates.
 
-**Impact**: Achieved &lt;100ms priority recalculation per grievance even under concurrent load. System handles 50+ simultaneous upvotes without performance degradation. Database query optimization reduced average response time by 85%.
+**Impact**: Achieved under 100ms priority recalculation per grievance even under concurrent load. System handles 50+ simultaneous upvotes without performance degradation. Database query optimization reduced average response time by 85%.
 
 </details>
 
-**2. Production ML Model Integration with Fast Response Times** - Serving TensorFlow predictions while maintaining user experience
+**2. TensorFlow Production Integration**
 
 <details>
 <summary>🔍 Deep Dive: ML Pipeline Optimization</summary>
@@ -315,11 +199,11 @@ The system uses Django's MVT pattern with modular app structure for maintainabil
 
 **Solution**: Developed preprocessing pipeline using PIL that standardizes all uploads to 200x200 grayscale before inference, reducing model input size by 70%. Implemented lazy model loading—CNN loads once at server startup and persists in memory rather than loading per request. Integrated Cloudinary CDN for automatic image optimization (450x600 resolution, 80% quality JPEG compression) before storage, reducing bandwidth and storage costs. Added fallback mechanisms for model failures to prevent system crashes.
 
-**Impact**: Reduced inference time from 5-10 seconds to &lt;2 seconds per image. Bandwidth usage decreased 60% through smart compression. Model memory footprint optimized to run on standard cloud instances without dedicated GPU infrastructure.
+**Impact**: Reduced inference time from 5-10 seconds to under 2 seconds per image. Bandwidth usage decreased 60% through smart compression. Model memory footprint optimized to run on standard cloud instances without dedicated GPU infrastructure.
 
 </details>
 
-**3. Multi-Platform Data Consistency Between Web and Mobile** - Synchronizing state across disconnected clients
+**3. Cross-Platform Data Sync**
 
 <details>
 <summary>🔍 Deep Dive: API Architecture & Sync Strategy</summary>
@@ -334,91 +218,12 @@ The system uses Django's MVT pattern with modular app structure for maintainabil
 
 ---
 
-## Tech Stack
+## Impact
 
-| Category          | Technologies                                                          |
-| ----------------- | --------------------------------------------------------------------- |
-| Backend Framework | Django 4.0.1, Django REST Framework 3.13.1, Djoser 2.1.0              |
-| Machine Learning  | TensorFlow 2.8.0, Keras 2.8.0, NumPy 1.22.2, PIL/Pillow 9.0.0         |
-| Database          | PostgreSQL, MSSQL (pyodbc connector)                                  |
-| Cloud & CDN       | Cloudinary (image optimization), Azure Web Services, WhiteNoise 5.3.0 |
-| Geospatial        | Geopy 2.2.0 (geocoding & location services)                           |
-| DevOps            | Docker, Docker Compose, Nginx, Gunicorn 20.1.0                        |
-| Authentication    | REST Framework Token Authentication, Django Auth                      |
-| Utilities         | Django Cleanup 6.0.0 (automated file management)                      |
-
----
-
-## Impact & Results
-
-```mermaid
-pie title Priority Algorithm Weight Distribution
-    "Community Upvotes" : 40
-    "ML Severity Score" : 30
-    "Issue Category" : 20
-    "Days Elapsed" : 10
-```
-
-**Performance Metrics**
-
-- ⚡ **70% Faster Triage**: Automated ML severity classification eliminates manual image review bottleneck
-- 🎯 **Sub-100ms Priority Updates**: Dynamic recalculation handles concurrent upvotes without lag
-- 🚀 **60% Bandwidth Savings**: Cloudinary optimization reduces image transfer costs and load times
-- 📊 **5-Stage Workflow**: Complete transparency from registration to resolution with audit trails
-
-**System Capabilities**
-
-- **3 Issue Categories**: Garbage accumulation, potholes, fallen trees (extensible architecture for more)
-- **1-10 Priority Scale**: Granular ranking enables precise resource allocation decisions
-- **Dual Platform Support**: Web dashboard for authorities + Android app for citizens
-- **Geospatial Analytics**: Location-based filtering and hotspot identification for proactive planning
-
-**Research Recognition**
-
-- 📄 **Published Research**: International Research Journal of Engineering and Technology (IRJET), Volume 9, Issue 4, April 2022
-- 🌟 **Open Source**: Full codebase available with Docker support for community deployment
-- 🎓 **Academic Impact**: Demonstrates practical ML application in civic technology domain
-
-**Real-World Deployment**
-
-- ☁️ **Production Ready**: Deployed on Azure Web Services with scalable infrastructure
-- 🔐 **Enterprise Security**: Token authentication, role-based access control, audit logging
-- 📱 **Cross-Platform**: RESTful API enables future integrations (iOS app, web widgets, third-party tools)
-- 🐳 **Easy Deployment**: Docker Compose configuration for one-command setup
-
----
-
-## Workflow Visualization
-
-```mermaid
-stateDiagram-v2
-    [*] --> Register: Citizen Submits
-    Register --> Pending: ML Analysis Complete
-    Pending --> InProgress: Authority Assigns Team
-    InProgress --> Complete: Issue Resolved
-    InProgress --> Rejected: Invalid/Duplicate
-    Complete --> [*]
-    Rejected --> [*]
-
-    note right of Register
-        ML severity analysis
-        Priority calculation
-        Location capture
-    end note
-
-    note right of Pending
-        Visible in dashboard
-        Community can upvote
-        Priority updates dynamically
-    end note
-
-    note right of InProgress
-        Field team assigned
-        Status updates logged
-        Citizens notified
-    end note
-```
-
-**Workflow Benefits**
-
-Each stage provides clear accountability and transparency. Citizens receive notifications at every transition. Municipal authorities track team performance through activity logs. The system prevents issues from being forgotten—time-based priority weighting ensures old grievances resurface if unresolved.
+- ⚡ **70% Faster Triage**: Automated ML classification
+- 🎯 **under 100ms Priority Updates**: Concurrent upvote handling
+- 🚀 **60% Bandwidth Saved**: Cloudinary optimization
+- 📊 **5-Stage Workflow**: Complete audit trail
+- 📱 **Dual Platform**: Web dashboard + [Android app](/projects/ProjectCleanAndroid)
+- 📄 **Published Research**: [IRJET V9/i4](https://www.irjet.net/archives/V9/i4/IRJET-V9I4373.pdf)
+- 🐳 **Docker Ready**: One-command deployment
